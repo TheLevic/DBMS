@@ -3,7 +3,7 @@ import os.path
 
 class DB:
 
-#    recordSize = ? 
+    recordSize = 71 
 
     #default constructor
     def __init__(self):
@@ -13,9 +13,9 @@ class DB:
         self.numOverflow = None;
 
     #Open method
-    def open(self, filepath):
+    def open(self, filename):
         try:
-            db = open(filepath + ".csv")
+            db = open(filename+ ".csv")
             self.numRecords = len(db.readlines());
             self.dataFilePtr = db;
             self.numOverflow = 0;
@@ -39,6 +39,15 @@ class DB:
             return True;
         else:
             return False;
+
+    def __readRecord(self, recordNum, name, rank, city, zip, eployees):
+        pass;
+    
+    def __writeRecord(self, name, rank, city, state,zip, employees):
+        pass;
+
+
+
 
     #create database
     def createDB(self,filename):
