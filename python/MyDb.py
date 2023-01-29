@@ -79,26 +79,66 @@ class DB():
             return "Database closed successfully.";
         else:
             return "There is no database to close.";
+    
+
+    #Write a binary search method to search for a record in the database using the primary key
+    def binarySearch(self, key):
+        low = 0;
+        high = self.numRecords - 1;
+        while (low <= high):
+            mid = (low + high) // 2;
+            self.fileDataPtr.seek(mid * self.recordSize);
+            name = self.fileDataPtr.read(30).strip();
+            if (key == name):
+                return mid;
+            elif (key < name):
+                high = mid - 1;
+            else:
+                low = mid + 1;
+        return -1;
+
+    # Write a method to display a record from the database using the primary key
+    def displayRecord(self, key):
+        if (self.isOpen()):
+            index = self.binarySearch(key);
+            if (index != -1):
+                self.fileDataPtr.seek(index * self.recordSize);
+                name = self.fileDataPtr.read(30).strip();
+                rank = self.fileDataPtr.read(5).strip();
+                city = self.fileDataPtr.read(30).strip();
+                state = self.fileDataPtr.read(3).strip();
+                zip = self.fileDataPtr.read(7).strip();
+                employees = self.fileDataPtr.read(10).strip();
+                return "Name: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n";
+            else:
+                return "Record not found.";
+        else:
+            return "There is no database open.";
+
 
     def main(self):
-        print("Hello, please select an option from the menu below:");
-        print("1. Create a new database from a csv file");
-        print("2. Open an existing database");
-        print("3. Close the current database");
-        print("4. Display a record from the database using primary key");
-        print("5. Update a record in the database using primary key");
-        print("6. Create Report");
-        print("7. Delete a record from the database using primary key");
-        print("8. Exit the program");
+        choice =  None;
+        while (choice != "8"):
+            print("\n\nHello, please select an option from the menu below:");
+            print("1. Create a new database from a csv file");
+            print("2. Open an existing database");
+            print("3. Close the current database");
+            print("4. Display a record from the database using primary key");
+            print("5. Update a record in the database using primary key");
+            print("6. Create Report");
+            print("7. Delete a record from the database using primary key");
+            print("8. Exit the program");
 
-        choice = input("Enter your choice: ");
-        if choice == "1":
-            filename = input("Enter the name of the csv file (not including .csv): ");
-            self.createDB(filename);
-        elif choice == "2":
-            filename = input("Enter the name of the database file: ");
-            self.openDB(filename);
-        elif choice == "3":
-            self.closeDB();
-
-
+            choice = input("Enter your choice: ");
+            if choice == "1":
+                filename = input("Enter the name of the csv file (not including .csv): ");
+                self.createDB(filename);
+            elif choice == "2":
+                filename = input("Enter the name of the database file: ");
+                self.openDB(filename);
+            elif choice == "3":
+                self.closeDB();
+            elif choice == "4":
+                key = input("Enter the name of the company: ");
+                print("\n")
+                print(self.displayRecord(key));
