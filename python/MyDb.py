@@ -1,4 +1,5 @@
 import csv
+import os
 
 class DB():
     recordSize = 86;
@@ -8,6 +9,7 @@ class DB():
         self.numOverflow = 0;
         self.fileDataPtr = None;
         self.configPtr = None;
+        self.configFileName = None;
         self.csvFileName = None;
         self.dbFileName = None;
 
@@ -24,11 +26,17 @@ class DB():
     def createDB(self, filename):
        self.csvFileName = filename + ".csv";
        self.dbFileName = filename + ".data";
+       self.configFileName = filename + ".config";
 
        #Read the csv file and write into data files
        with open(self.csvFileName, "r") as csvFile:
           data_list = list(csv.DictReader(csvFile, fieldnames=('name', 'rank', 'city', 'state', 'zip', 'employees')));
           self.numRecords = len(data_list);
+
+       with open(self.configFileName, "w") as configFile:
+            configFile.write("numRecords = " + str(self.numRecords));
+            self.configPtr = configFile;
+        
         
         # Call the writeRecord method to write the data to the database
        with open(self.dbFileName, "w") as db:
@@ -38,11 +46,20 @@ class DB():
 
     def openDB(self, filename):
         if (self.isOpen()):
-            return "Please close the current database before opening a new one."
+            "Please close the current database before opening a new one."
+            return False;
+
+        elif (not os.path.isfile(filename + ".data")):
+            print("The database file does not exist.");
+            return False;
         else:
             self.dbFileName = filename + ".data";
             self.fileDataPtr = open(self.dbFileName, "r"); 
-            return "Database opened successfully."
+            self.csvFileName = filename + ".csv";
+            self.configFileName = filename + ".config";
+            self.configPtr = open(self.configFileName, "r");
+            self.numRecords = int(self.configPtr.readline().split(" = ")[1]);
+            return True;
     
     def isOpen(self):
         if self.fileDataPtr != None:
