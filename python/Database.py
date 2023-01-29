@@ -3,42 +3,10 @@ import os.path
 
 class DB:
 
-#    recordSize = ? 
-
     #default constructor
     def __init__(self):
-        self.filestream = None;
-        self.numRecords = 0;
-        self.dataFilePtr = None;
-        self.numOverflow = None;
-
-    #Open method
-    def open(self, filepath):
-        try:
-            db = open(filepath + ".csv")
-            self.numRecords = len(db.readlines());
-            self.dataFilePtr = db;
-            self.numOverflow = 0;
-
-        except:
-            print("Something went wrong while opening, please try again.");
-
-    #close the database
-    def CloseDB(self):
-        try:
-            self.filestream = None;
-            self.numRecords = 0;
-            self.dataFilePtr.close();
-            self.dataFilePtr = None;
-            self.numOverflow = None;
-        except:
-            print("Something went wrong closing the database");
-
-    def isOpen(self):
-        if (self.dataFilePtr):
-            return True;
-        else:
-            return False;
+        self.filestream = None
+        self.num_record = 0
 
     #create database
     def createDB(self,filename):
@@ -118,4 +86,7 @@ class DB:
                 low = self.middle + 1
 
 
-    
+    #close the database
+    def CloseDB(self):
+
+        self.text_filename.close()
