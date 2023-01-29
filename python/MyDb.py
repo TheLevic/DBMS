@@ -7,6 +7,8 @@ class DB():
         self.numOverflow = 0;
         self.fileDataPtr = None;
         self.configPtr = None;
+        self.csvFileName = None;
+        self.dbFileName = None;
 
     #Writing a record to the database
     def writeRecord(self, name, rank, city, state, zip, employees):
@@ -18,6 +20,21 @@ class DB():
         self.fileDataPtr.write("{:10.10}".format(employees));
         self.fileDataPtr.write("\n");
 
-    def createDB(self):
+    def createDB(self, filename):
+       self.csvFileName = filename + ".csv";
+       self.dbFileName = filename + ".data";
+
+       #Read the csv file and write into data files
+         with open(self.csvFileName, "r") as csv:
+                data_list = list(csv.DictReader(csv, fieldnames=('name', 'rank', 'city', 'state', 'zip', 'employees')));
+                self.numRecords = len(data_list);
         
+        # Call the writeRecord method to write the data to the database
+        with open(self.dbFileName, "w") as db:
+            self.fileDataPtr = db;
+            for dict in data_list:
+                self.writeRecord(dict["name"], dict["rank"], dict["city"], dict["state"], dict["zip"], dict["employees"]);
+        
+
+
 
