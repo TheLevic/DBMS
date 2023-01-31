@@ -142,3 +142,9 @@ class DB():
                 key = input("Enter the name of the company: ");
                 print("\n")
                 print(self.displayRecord(key));
+
+def run():
+    db = DB();
+    db.main();
+if __name__ == "__main__":
+    run();
