@@ -23,6 +23,9 @@ class DB():
         self.fileDataPtr.write("{:10.10}".format(employees));
         self.fileDataPtr.write("\n");
 
+    def readRecord(self, recordNum, name, rank, city, state, zip, employees):
+        pass;
+
     def createDB(self, filename):
        self.csvFileName = filename + ".csv";
        self.dbFileName = filename + ".data";
@@ -36,7 +39,6 @@ class DB():
        with open(self.configFileName, "w") as configFile:
             configFile.write("numRecords = " + str(self.numRecords));
             self.configPtr = configFile;
-        
         
         # Call the writeRecord method to write the data to the database
        with open(self.dbFileName, "w") as db:
@@ -99,7 +101,7 @@ class DB():
         return -1;
 
     # Write a method to display a record from the database using the primary key
-    def displayRecord(self, key):
+    def findRecord(self, key):
         try:
             if (self.isOpen()):
                 index = self.binarySearch(key);
@@ -145,7 +147,7 @@ class DB():
             elif choice == "4":
                 key = input("Enter the name of the company: ");
                 print("\n")
-                print(self.displayRecord(key));
+                print(self.findRecord(key));
 
 def run():
     db = DB();
