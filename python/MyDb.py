@@ -24,6 +24,7 @@ class DB():
         self.fileDataPtr.write("{:10.10}".format(employees));
         self.fileDataPtr.write("\n");
 
+    #Reading a record based on what what record number is passed in
     def readRecord(self, recordNum):
         name = rank = city = state = zip = employees = None;
         if recordNum >=0 and recordNum < self.numRecords:
@@ -42,6 +43,8 @@ class DB():
 
         self.record = dict({"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
         print("Record Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
+
+    #Creating the database and necessary files
     def createDB(self, filename):
        self.csvFileName = filename + ".csv";
        self.dbFileName = filename + ".data";
@@ -62,6 +65,7 @@ class DB():
                 self.writeRecord(dict["name"], dict["rank"], dict["city"], dict["state"], dict["zip"], dict["employees"]);
             self.fileDataPtr = None;
 
+    #Opening the database and setting ptrs
     def openDB(self, filename):
         if (self.isOpen()):
             "Please close the current database before opening a new one."
