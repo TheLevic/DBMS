@@ -43,6 +43,7 @@ class DB():
             self.fileDataPtr = db;
             for dict in data_list:
                 self.writeRecord(dict["name"], dict["rank"], dict["city"], dict["state"], dict["zip"], dict["employees"]);
+            self.fileDataPtr = None;
 
     def openDB(self, filename):
         if (self.isOpen()):
@@ -99,21 +100,24 @@ class DB():
 
     # Write a method to display a record from the database using the primary key
     def displayRecord(self, key):
-        if (self.isOpen()):
-            index = self.binarySearch(key);
-            if (index != -1):
-                self.fileDataPtr.seek(index * self.recordSize);
-                name = self.fileDataPtr.read(30).strip();
-                rank = self.fileDataPtr.read(5).strip();
-                city = self.fileDataPtr.read(30).strip();
-                state = self.fileDataPtr.read(3).strip();
-                zip = self.fileDataPtr.read(7).strip();
-                employees = self.fileDataPtr.read(10).strip();
-                return "Name: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n";
+        try:
+            if (self.isOpen()):
+                index = self.binarySearch(key);
+                if (index != -1):
+                    self.fileDataPtr.seek(index * self.recordSize);
+                    name = self.fileDataPtr.read(30).strip();
+                    rank = self.fileDataPtr.read(5).strip();
+                    city = self.fileDataPtr.read(30).strip();
+                    state = self.fileDataPtr.read(3).strip();
+                    zip = self.fileDataPtr.read(7).strip();
+                    employees = self.fileDataPtr.read(10).strip();
+                    return "Name: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n";
+                else:
+                    return "Record not found.";
             else:
-                return "Record not found.";
-        else:
-            return "There is no database open.";
+                return "There is no database open.";
+        except:
+            return "An error occurred while trying to display the record. Please make sure the correct database is open and try again.";
 
 
     def main(self):
