@@ -6,6 +6,7 @@ class DB():
 
     def __init__(self):
         self.numRecords = 0;
+        self.record = None;
         self.numOverflow = 0;
         self.fileDataPtr = None;
         self.configPtr = None;
@@ -23,9 +24,24 @@ class DB():
         self.fileDataPtr.write("{:10.10}".format(employees));
         self.fileDataPtr.write("\n");
 
-    def readRecord(self, recordNum, name, rank, city, state, zip, employees):
-        pass;
+    def readRecord(self, recordNum):
+        name = rank = city = state = zip = employees = None;
+        if recordNum >=0 and recordNum < self.numRecords:
+            self.fileDataPtr.seek(0,0)
+            self.fileDataPtr.seek(recordNum*self.recordSize)
+            line= self.fileDataPtr.readline().rstrip('\n')
+            flag = True
+        
+        if flag:
+            name = line[0:30]
+            rank = line[30:35]
+            city = line[35:65]
+            state = line[65:68]
+            zip = line[68:75]
+            employees = line[75:85];
 
+        self.record = dict({"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
+        print("Record Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
     def createDB(self, filename):
        self.csvFileName = filename + ".csv";
        self.dbFileName = filename + ".data";
@@ -38,7 +54,6 @@ class DB():
 
        with open(self.configFileName, "w") as configFile:
             configFile.write("numRecords = " + str(self.numRecords));
-            self.configPtr = configFile;
         
         # Call the writeRecord method to write the data to the database
        with open(self.dbFileName, "w") as db:
@@ -102,38 +117,39 @@ class DB():
 
     # Write a method to display a record from the database using the primary key
     def findRecord(self, key):
-        try:
-            if (self.isOpen()):
-                index = self.binarySearch(key);
-                if (index != -1):
-                    self.fileDataPtr.seek(index * self.recordSize);
-                    name = self.fileDataPtr.read(30).strip();
-                    rank = self.fileDataPtr.read(5).strip();
-                    city = self.fileDataPtr.read(30).strip();
-                    state = self.fileDataPtr.read(3).strip();
-                    zip = self.fileDataPtr.read(7).strip();
-                    employees = self.fileDataPtr.read(10).strip();
-                    return "Name: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n";
-                else:
-                    return "Record not found.";
+        
+        if (self.isOpen()):
+            index = self.binarySearch(key);
+            if (index != -1):
+                self.fileDataPtr.seek(index * self.recordSize);
+                name = self.fileDataPtr.read(30).strip();
+                rank = self.fileDataPtr.read(5).strip();
+                city = self.fileDataPtr.read(30).strip();
+                state = self.fileDataPtr.read(3).strip();
+                zip = self.fileDataPtr.read(7).strip();
+                employees = self.fileDataPtr.read(10).strip();
+                return "Record Number: " + str(index) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n";
             else:
-                return "There is no database open.";
-        except:
-            return "An error occurred while trying to display the record. Please make sure the correct database is open and try again.";
+                return "Record not found.";
+        else:
+            return "There is no database open.";
+    
+        
 
 
     def main(self):
         choice =  None;
-        while (choice != "8"):
+        while (choice != "9"):
             print("\n\nHello, please select an option from the menu below:");
             print("1. Create a new database from a csv file");
             print("2. Open an existing database");
             print("3. Close the current database");
-            print("4. Display a record from the database using primary key");
-            print("5. Update a record in the database using primary key");
-            print("6. Create Report");
-            print("7. Delete a record from the database using primary key");
-            print("8. Exit the program");
+            print("4. Display a record from the database using company name");
+            print("5. Get a record from the database using the record number")
+            print("6. Update a record in the database using primary key");
+            print("7. Create Report");
+            print("8. Delete a record from the database using primary key");
+            print("9. Exit the program");
 
             choice = input("Enter your choice: ");
             if choice == "1":
@@ -148,6 +164,9 @@ class DB():
                 key = input("Enter the name of the company: ");
                 print("\n")
                 print(self.findRecord(key));
+            elif choice == "5":
+                recordNum = int(input("Enter the record number: "));
+                self.readRecord(recordNum);
 
 def run():
     db = DB();
