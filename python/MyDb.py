@@ -32,17 +32,19 @@ class DB():
             self.fileDataPtr.seek(recordNum*self.recordSize)
             line= self.fileDataPtr.readline().rstrip('\n')
             flag = True
-        
-        if flag:
-            name = line[0:30]
-            rank = line[30:35]
-            city = line[35:65]
-            state = line[65:68]
-            zip = line[68:75]
-            employees = line[75:85];
-
-        self.record = dict({"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
-        print("Record Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
+            if flag:
+                name = line[0:30]
+                rank = line[30:35]
+                city = line[35:65]
+                state = line[65:68]
+                zip = line[68:75]
+                employees = line[75:85];
+                self.record = dict({"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
+                print("Record Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
+            else:
+                print("Record not found.");
+        else:
+            print("Sorry, record number " + str(recordNum) + " does not exist.");
 
     #Creating the database and necessary files
     def createDB(self, filename):
