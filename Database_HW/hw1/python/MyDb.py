@@ -40,7 +40,7 @@ class DB():
                 zip = line[68:75]
                 employees = line[75:85];
                 self.record = dict({"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
-                print("Record Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
+                print("\nRecord Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
             else:
                 print("Record not found.");
         else:
@@ -100,9 +100,9 @@ class DB():
             self.configPtr = None;
             self.csvFileName = None;
             self.dbFileName = None;
-            return "Database closed successfully.";
+            print("Database closed successfully.");
         else:
-            return "There is no database to close.";
+            print("There is no database to close.");
     
 
     #Write a binary search method to search for a record in the database using the primary key
@@ -159,18 +159,23 @@ class DB():
 
             choice = input("Enter your choice: ");
             if choice == "1":
+                print("\n");
                 filename = input("Enter the name of the csv file (not including .csv): ");
                 self.createDB(filename);
             elif choice == "2":
+                print("\n");
                 filename = input("Enter the name of the database file: ");
                 self.openDB(filename);
             elif choice == "3":
+                print("\n");
                 self.closeDB();
             elif choice == "4":
+                print("\n")
                 key = input("Enter the name of the company: ");
                 print("\n")
                 print(self.findRecord(key));
             elif choice == "5":
+                print("\n")
                 recordNum = int(input("Enter the record number: "));
                 self.readRecord(recordNum);
 
