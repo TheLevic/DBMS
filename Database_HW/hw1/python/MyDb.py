@@ -123,7 +123,6 @@ class DB():
 
     # Write a method to display a record from the database using the primary key
     def findRecord(self, key):
-        
         if (self.isOpen()):
             index = self.binarySearch(key);
             if (index != -1):
