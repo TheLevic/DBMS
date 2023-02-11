@@ -16,7 +16,7 @@ class DB():
         self.dbFileName = None;
 
     #Writing a record to the database
-    def writeRecord(self, name, rank, city, state, zip, employees):
+    def writeRecord(self, name, rank, city, state, zip, employees ):
         self.fileDataPtr.write("{:60.60}".format(name));
         self.fileDataPtr.write("{:5.5}".format(rank));
         self.fileDataPtr.write("{:30.30}".format(city));
@@ -24,7 +24,7 @@ class DB():
         self.fileDataPtr.write("{:7.7}".format(zip));
         self.fileDataPtr.write("{:10.10}".format(employees));
         self.fileDataPtr.write("\n");
-
+    
     #Reading a record based on what what record number is passed in
     def readRecord(self, recordNum):
         name = rank = city = state = zip = employees = None;
@@ -66,7 +66,7 @@ class DB():
             self.fileDataPtr = db;
             for dict in data_list:
                 self.writeRecord(dict["name"], dict["rank"], dict["city"], dict["state"], dict["zip"], dict["employees"]);
-            self.fileDataPtr = None;
+            self.fileDataPtr= None;
 
     #Opening the database and setting ptrs
     def openDB(self, filename):
@@ -79,7 +79,7 @@ class DB():
             return False;
         else:
             self.dbFileName = filename + ".data";
-            self.fileDataPtr = open(self.dbFileName, "r"); 
+            self.fileDataPtr = open(self.dbFileName, "r+");
             self.csvFileName = filename + ".csv";
             self.configFileName = filename + ".config";
             self.configPtr = open(self.configFileName, "r");
@@ -113,7 +113,7 @@ class DB():
         while (low <= high):
             mid = (low + high) // 2;
             self.fileDataPtr.seek(mid * self.recordSize);
-            name = self.fileDataPtr.read(30).strip();
+            name = self.fileDataPtr.read(60).strip();
             if (key == name):
                 return mid;
             elif (key < name):
@@ -139,8 +139,24 @@ class DB():
                 return "Record not found.";
         else:
             return "There is no database open.";
-    
-        
+
+    def updateRecord(self, name, rank, city, state, zip, employees):
+        pass;
+
+    def deleteRecord(self, name):
+        if (self.isOpen()):
+            index = self.binarySearch(name); 
+            if index == -1:
+                print("Sorry, couldn't find that company name");
+                return False;
+
+            self.fileDataPtr.seek(index * self.recordSize);
+            self.writeRecord(name, "-1", "-1", "-1","-1","-1");
+            return True;
+
+        else:
+            print("There is no database open.")
+
 
 
     def main(self):
@@ -178,6 +194,11 @@ class DB():
                 print("\n")
                 recordNum = int(input("Enter the record number: "));
                 self.readRecord(recordNum);
+            elif choice == "8":
+                name = input("Enter the name of the record you want to delete: ");
+                print("\n");
+                self.deleteRecord(name);
+                print("Record has been deleted");
 
 def run():
     db = DB();
