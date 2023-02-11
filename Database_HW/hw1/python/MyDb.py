@@ -2,11 +2,12 @@ import csv
 import os
 
 class DB():
-    recordSize = 86;
+    
 
     def __init__(self):
         self.numRecords = 0;
         self.record = None;
+        self.recordSize = 116;
         self.numOverflow = 0;
         self.fileDataPtr = None;
         self.configPtr = None;
@@ -16,7 +17,7 @@ class DB():
 
     #Writing a record to the database
     def writeRecord(self, name, rank, city, state, zip, employees):
-        self.fileDataPtr.write("{:30.30}".format(name));
+        self.fileDataPtr.write("{:60.60}".format(name));
         self.fileDataPtr.write("{:5.5}".format(rank));
         self.fileDataPtr.write("{:30.30}".format(city));
         self.fileDataPtr.write("{:3.3}".format(state));
@@ -33,12 +34,12 @@ class DB():
             line= self.fileDataPtr.readline().rstrip('\n')
             flag = True
             if flag:
-                name = line[0:30]
-                rank = line[30:35]
-                city = line[35:65]
-                state = line[65:68]
-                zip = line[68:75]
-                employees = line[75:85];
+                name = line[0:60]
+                rank = line[60:65]
+                city = line[65:95]
+                state = line[95:98]
+                zip = line[98:105]
+                employees = line[105:115];
                 self.record = dict({"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
                 print("Record Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
             else:
@@ -128,7 +129,7 @@ class DB():
             index = self.binarySearch(key);
             if (index != -1):
                 self.fileDataPtr.seek(index * self.recordSize);
-                name = self.fileDataPtr.read(30).strip();
+                name = self.fileDataPtr.read(60).strip();
                 rank = self.fileDataPtr.read(5).strip();
                 city = self.fileDataPtr.read(30).strip();
                 state = self.fileDataPtr.read(3).strip();
