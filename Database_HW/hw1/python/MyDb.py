@@ -134,7 +134,10 @@ class DB():
                 state = self.fileDataPtr.read(3).strip();
                 zip = self.fileDataPtr.read(7).strip();
                 employees = self.fileDataPtr.read(10).strip();
-                return "Record Number: " + str(index) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n";
+                if (rank == "-1" or city == "-1" or state == "-1" or zip == "-1" or employees == "-1"):
+                    return "Record not found."
+                else:
+                    print("Record Number: " + str(index) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
             else:
                 return "Record not found.";
         else:
