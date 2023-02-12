@@ -1,4 +1,5 @@
 import csv
+import time
 import os
 
 class DB():
@@ -24,6 +25,7 @@ class DB():
         self.fileDataPtr.write("{:7.7}".format(zip));
         self.fileDataPtr.write("{:10.10}".format(employees));
         self.fileDataPtr.write("\n");
+        self.fileDataPtr.flush();
     
     #Reading a record based on what what record number is passed in
     def readRecord(self, recordNum):
@@ -151,6 +153,7 @@ class DB():
                 return False;
             else:
                 self.fileDataPtr.seek(index * self.recordSize);
+                time.sleep(.2);                
                 self.writeRecord(name, rank, city, state, zip, employees);
                 return True;
 
