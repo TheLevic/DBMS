@@ -1,5 +1,4 @@
 import csv
-import time
 import os
 
 class DB():
@@ -153,7 +152,6 @@ class DB():
                 return False;
             else:
                 self.fileDataPtr.seek(index * self.recordSize);
-                time.sleep(.2);                
                 self.writeRecord(name, rank, city, state, zip, employees);
                 return True;
 
