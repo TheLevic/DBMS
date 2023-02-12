@@ -66,7 +66,7 @@ class DB():
             self.fileDataPtr = db;
             for dict in data_list:
                 self.writeRecord(dict["name"], dict["rank"], dict["city"], dict["state"], dict["zip"], dict["employees"]);
-            self.fileDataPtr= None;
+       self.fileDataPtr= None;
 
     #Opening the database and setting ptrs
     def openDB(self, filename):
@@ -144,7 +144,15 @@ class DB():
             return "There is no database open.";
 
     def updateRecord(self, name, rank, city, state, zip, employees):
-        pass;
+        if (self.isOpen()):
+            index = self.binarySearch(name);
+            if index == -1:
+                print("Couldn't find record. Please try again.\n");
+                return False;
+            else:
+                self.fileDataPtr.seek(index * self.recordSize);
+                self.writeRecord(name, rank, city, state, zip, employees);
+                return True;
 
     def deleteRecord(self, name):
         if (self.isOpen()):
@@ -197,11 +205,22 @@ class DB():
                 print("\n")
                 recordNum = int(input("Enter the record number: "));
                 self.readRecord(recordNum);
+            elif choice == "6":
+                print("\n");
+                recordToUpdate = input("Please enter the companies name that you want to update: ");
+                rank = input("Please enter the new rank of the company: ");
+                city = input("Please enter the new city for the company: ");
+                state = input("Please enter the new state for the company: ");
+                zip = input("Please enter the new zip code for the company: ");
+                employees = input("Please enter the new number of employees for the company: ");
+
+                if(self.updateRecord(recordToUpdate, rank, city,state, zip, employees)):
+                    print("Record has been updated");
             elif choice == "8":
                 name = input("Enter the name of the record you want to delete: ");
                 print("\n");
-                self.deleteRecord(name);
-                print("Record has been deleted");
+                if(self.deleteRecord(name)):
+                    print("Record has been deleted");
 
 def run():
     db = DB();
