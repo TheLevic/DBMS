@@ -41,8 +41,12 @@ class DB():
                 state = line[95:98]
                 zip = line[98:105]
                 employees = line[105:115];
-                self.record = dict({"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
-                print("\nRecord Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
+                if (rank == "-1   " or city == "-1                            " or state == "-1" or zip == "-1" or employees == "-1"):
+                    return False; 
+                else:
+                    self.record = dict({"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
+                    print("\nRecord Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
+                    return True;
             else:
                 print("Record not found.");
         else:
@@ -154,7 +158,18 @@ class DB():
                 self.fileDataPtr.seek(index * self.recordSize);
                 self.writeRecord(name, rank, city, state, zip, employees);
                 return True;
-
+    
+    def createReport(self):
+        if (self.isOpen()):
+            count = 0;
+            for i in range(self.numRecords):
+                if count >= 10:
+                    break;
+                elif (self.readRecord(i)):
+                    count += 1;
+                else:
+                    continue;
+                   
     def deleteRecord(self, name):
         if (self.isOpen()):
             index = self.binarySearch(name); 
@@ -180,33 +195,48 @@ class DB():
             print("3. Close the current database");
             print("4. Display a record from the database using company name");
             print("5. Get a record from the database using the record number")
-            print("6. Update a record in the database using primary key");
-            print("7. Create Report");
+            print("6. Create Report");
+            print("7. Update a record in the database using primary key");
             print("8. Delete a record from the database using primary key");
             print("9. Exit the program");
 
             choice = input("Enter your choice: ");
+
             if choice == "1":
                 print("\n");
                 filename = input("Enter the name of the csv file (not including .csv): ");
                 self.createDB(filename);
+
             elif choice == "2":
                 print("\n");
                 filename = input("Enter the name of the database file: ");
                 self.openDB(filename);
+
             elif choice == "3":
                 print("\n");
                 self.closeDB();
+
             elif choice == "4":
                 print("\n")
                 key = input("Enter the name of the company: ");
                 print("\n")
                 print(self.findRecord(key));
+
             elif choice == "5":
                 print("\n")
-                recordNum = int(input("Enter the record number: "));
-                self.readRecord(recordNum);
+                if (self.isOpen()):
+                    recordNum = int(input("Enter the record number: "));
+                    if(not self.readRecord(recordNum)):
+                        print("Could not find record.");
+                    else:
+                        self.readRecord(recordNum);
+                else:
+                    print("There is no open database.")
+
             elif choice == "6":
+                self.createReport();
+
+            elif choice == "7":
                 print("\n");
                 recordToUpdate = input("Please enter the companies name that you want to update: ");
                 rank = input("Please enter the new rank of the company: ");
@@ -217,6 +247,7 @@ class DB():
 
                 if(self.updateRecord(recordToUpdate, rank, city,state, zip, employees)):
                     print("Record has been updated");
+
             elif choice == "8":
                 name = input("Enter the name of the record you want to delete: ");
                 print("\n");
