@@ -143,6 +143,7 @@ class DB():
                     return "Record not found."
                 else:
                     print("Record Number: " + str(index) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
+                    return True;
             else:
                 return "Record not found.";
         else:
@@ -221,7 +222,10 @@ class DB():
                 if (self.isOpen()):
                     key = input("Enter the name of the company: ");
                     print("\n")
-                    print(self.findRecord(key));
+                    if (self.findRecord(key) == True):
+                        pass;
+                    else:
+                        print("Could not find record")
                 else:
                     print("No database is open");
 
