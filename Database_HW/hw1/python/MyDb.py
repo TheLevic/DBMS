@@ -218,9 +218,12 @@ class DB():
 
             elif choice == "4":
                 print("\n")
-                key = input("Enter the name of the company: ");
-                print("\n")
-                print(self.findRecord(key));
+                if (self.isOpen()):
+                    key = input("Enter the name of the company: ");
+                    print("\n")
+                    print(self.findRecord(key));
+                else:
+                    print("No database is open");
 
             elif choice == "5":
                 print("\n")
