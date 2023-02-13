@@ -44,11 +44,10 @@ class DB():
                 if (rank == "-1   " or city == "-1                            " or state == "-1" or zip == "-1" or employees == "-1"):
                     return False; 
                 else:
-                    self.record = dict({"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
-                    print("\nRecord Number: " + str(recordNum) + "\tName: " + name + "\t Rank: " + rank + "\t City: " + city + "\t State: " + state + "\t Zip: " + zip + "\t Employees: " + employees + "\n");
+                    self.record = dict({"recordNum": recordNum,"name":name,"rank":rank,"city":city,"state":state,"zip":zip,"employees":employees})
                     return True;
             else:
-                print("Record not found.");
+                return False
         else:
             print("Sorry, record number " + str(recordNum) + " does not exist.");
 
@@ -159,6 +158,11 @@ class DB():
                 self.fileDataPtr.seek(index * self.recordSize);
                 self.writeRecord(name, rank, city, state, zip, employees);
                 return True;
+    def printRecord(self):
+        for val in self.record:
+                variable = val;
+                info = str(self.record[val]).strip();
+                print(variable + ": " + info + "\t", end="");
     
     def createReport(self):
         if (self.isOpen()):
@@ -168,6 +172,8 @@ class DB():
                     break;
                 elif (self.readRecord(i)):
                     count += 1;
+                    self.printRecord();
+                    print("\n")
                 else:
                     continue;
                    
@@ -233,10 +239,11 @@ class DB():
                 print("\n")
                 if (self.isOpen()):
                     recordNum = int(input("Enter the record number: "));
-                    if(not self.readRecord(recordNum)):
-                        print("Could not find record.");
+                    if(self.readRecord(recordNum)):
+                       self.printRecord(); 
+                            
                     else:
-                        self.readRecord(recordNum);
+                        print("Could not find record.");
                 else:
                     print("There is no open database.")
 
