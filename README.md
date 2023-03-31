@@ -1,5 +1,2 @@
-Example code to read from fixed length records (random access file)
-Author:  Susan Gauch, Thanh Bui
-
-To run the example on turing:
-python3 TestDB.py
+# DBMS
+## Personal Repo for all of my DBMS Homework and Assignments
