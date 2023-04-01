@@ -102,6 +102,9 @@ while choice != "6":
     if choice == "1":
         # Select all sections in the spection table
         executeSelect("SELECT * FROM DEPT;")
+        selectedDept = input("Enter the department code for the professors you want to show: ")
+        executeSelect("SELECT * FROM PROFESSOR WHERE DEPT_CODE = '" + selectedDept + "';")
+
 
 close_db()  # close database
 
