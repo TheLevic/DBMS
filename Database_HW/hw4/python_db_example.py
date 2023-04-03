@@ -5,6 +5,7 @@
 
 import mysql.connector
 from tabulate import tabulate
+import SIDnumber
 
 
 def open_database(hostname, user_name, mysql_pw, database_name):
@@ -138,6 +139,8 @@ while choice != "6":
         executeSelect("SELECT * FROM COURSE;")
         # Ask user what course they want to add a section for
         selectedCourse = input("Please enter the course number that you want to add a section for: ")
+        selectedSID = SIDnumber.SID
+        SIDnumber.increment()
         selectedDept = input("Please enter the department code that you want to add a section for: ")
         selectedProf = input("Please enter the professor ID that you want to add a section for: ")
         #Getting all input for adding to section table
@@ -150,6 +153,13 @@ while choice != "6":
         selectedEndDay = input("Please select the end date of the section: ")
         selectedMaxEnrollment = input("Please enter the maximum enrollment of the section: ")
         selectedCurrentEnrollment = input("Please enter the current enrollment of the section: ")
+
+        # Check that all input variables are not null
+        if selectedCourse != "" and selectedDept != "" and selectedProf != "" and selectedRoom != "" and selectedBuilding != "" and selectedDays != "" and selectedStartTime != "" and selectedEndTime != "" and selectedStartDay != "" and selectedEndDay != "" and selectedMaxEnrollment != "" and selectedCurrentEnrollment != "":
+            # Insert new section into section table
+            insert("SECTION", "'"+selectedSID+"', '"+selectedCourse+"', '"+selectedDept+"', '"+selectedProf+"', '"+selectedRoom+"', '"+selectedBuilding+"', '"+selectedDays+"', '"+selectedStartTime+"', '"+selectedEndTime+"', '"+selectedStartDay+"', '"+selectedEndDay+"', '"+selectedMaxEnrollment+"', '"+selectedCurrentEnrollment+"'")
+            # Display all sections
+            executeSelect("SELECT * FROM SECTION;") 
 
 close_db()  # close database
 
