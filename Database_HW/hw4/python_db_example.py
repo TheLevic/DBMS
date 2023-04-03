@@ -50,32 +50,13 @@ def close_db():  # use this function to close db
     cursor.close()
     conn.close()
 
+def getUniqueSID():
+    with open('SID.txt', 'r') as f:
+        sid = f.readline()
+        with open('SID.txt', 'w') as j:
+            j.write(str(int(sid) + 1))
+        return sid
 
-##### Test #######
-
-# print(' ')
-# print('Testing select: ')
-# print('=======================================')
-# executeSelect('SELECT * FROM DEPT')
-
-# print(' ')
-# print('\nTesting insert of dept MATH:')
-# print('=======================================')
-# insert("DEPT", "'MATH', 'Mathematics', 309, 'SCEN'")
-# executeSelect('SELECT * FROM DEPT WHERE DEPT_CODE = "MATH";')
-
-# print(' ')
-# print('\nTesting delete of dept MATH:')
-# print('=======================================')
-# executeUpdate('DELETE FROM DEPT WHERE DEPT_CODE = "MATH";')
-# executeSelect('SELECT * FROM DEPT WHERE DEPT_CODE = "MATH";')
-
-# print(' ')
-# print('\nTesting update of professor name :')
-# print('=======================================')
-# executeSelect("SELECT * FROM PROFESSOR WHERE PROF_ID = 123456;")
-# executeUpdate("Update PROFESSOR set PROF_NAME = 'Susan Dyer' WHERE PROF_ID = 123456;")
-# executeSelect("SELECT * FROM PROFESSOR WHERE PROF_ID = 123456;")
 
 
 mysql_username = 'lccrider'  # please change to your username
@@ -138,6 +119,7 @@ while choice != "6":
         executeSelect("SELECT * FROM COURSE;")
         # Ask user what course they want to add a section for
         selectedCourse = input("Please enter the course number that you want to add a section for: ")
+        selectedSID = getUniqueSID()
         selectedDept = input("Please enter the department code that you want to add a section for: ")
         selectedProf = input("Please enter the professor ID that you want to add a section for: ")
         #Getting all input for adding to section table
@@ -150,6 +132,17 @@ while choice != "6":
         selectedEndDay = input("Please select the end date of the section: ")
         selectedMaxEnrollment = input("Please enter the maximum enrollment of the section: ")
         selectedCurrentEnrollment = input("Please enter the current enrollment of the section: ")
+
+        # Check that all input variables are not null
+        if selectedCourse != "" and selectedDept != "" and selectedProf != "" and selectedRoom != "" and selectedBuilding != "" and selectedDays != "" and selectedStartTime != "" and selectedEndTime != "" and selectedStartDay != "" and selectedEndDay != "" and selectedMaxEnrollment != "" and selectedCurrentEnrollment != "":
+            # Insert new section into section table
+            insert("SECTION", "'" + selectedSID + "', '" + selectedDept + "', '" + selectedCourse + "', '" + selectedProf + "', '" + selectedRoom + "', '" + selectedBuilding + "', '" + selectedDays + "', '" + selectedStartTime + "', '" + selectedEndTime + "', '" + selectedStartDay + "', '" + selectedEndDay + "', '" + selectedMaxEnrollment + "', '" + selectedCurrentEnrollment + "'")            
+
+
+            # Display all sections
+            executeSelect("SELECT * FROM SECTION;") 
+        else:
+            print("Sorry, you must enter all values. Nothing can be null.")
 
 close_db()  # close database
 
