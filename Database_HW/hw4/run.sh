@@ -9,5 +9,10 @@ chmod +x runpython.sh
 ./runpython.sh
 1
 MEEG
+2
+1
+1
+csce
+3
 6
 EOF

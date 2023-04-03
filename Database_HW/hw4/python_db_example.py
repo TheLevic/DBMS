@@ -104,7 +104,52 @@ while choice != "6":
         executeSelect("SELECT * FROM DEPT;")
         selectedDept = input("Enter the department code for the professors you want to show: ")
         executeSelect("SELECT * FROM PROFESSOR WHERE DEPT_CODE = '" + selectedDept + "';")
+    elif choice == "2":
+        print("Please select on of the following options:")
+        print("1. List all Classes")
+        print("2. List all open classes")
+        choice = input("Enter your choice: ")
+        print("Please select on of the following options:")
+        print("1. List Classes by department")
+        print("2. List Classes by level")
+        innerchoice = input("Enter your choice: ")
+        if innerchoice == "1":
+            thirdchoice = input("Please input Department Code:")
+        if innerchoice == "2":
+            thirdchoice = input("Please input Level of class:")
+       
+        # Listing classes regardless of whether they are open
+        if choice == "1":
+            # listing by department
+            if innerchoice == "1":
+                executeSelect("SELECT DEPT_CODE, COURSE_NUM, BUILDING, ROOM_NUM, DAYS, START_TIME, END_TIME, (MAX_ENROLLMENT - CURRENT_ENROLLMENT) AS seats_available FROM SECTION WHERE DEPT_CODE ='"+thirdchoice +"';")
+            if innerchoice == "2":
+                executeSelect("SELECT DEPT_CODE, COURSE_NUM, BUILDING, ROOM_NUM, DAYS, START_TIME, END_TIME, (MAX_ENROLLMENT - CURRENT_ENROLLMENT) AS seats_available FROM SECTION WHERE COURSE_NUM LIKE '"+thirdchoice +"%';")
+        # Listing all open classes
+        if choice == "2":
+            if innerchoice == "1":
+                executeSelect("SELECT DEPT_CODE, COURSE_NUM, BUILDING, ROOM_NUM, DAYS, START_TIME, END_TIME, (MAX_ENROLLMENT - CURRENT_ENROLLMENT) AS seats_available FROM SECTION WHERE DEPT_CODE ='"+thirdchoice +"' AND MAX_ENROLLMENT>CURRENT_ENROLLMENT;")
+            if innerchoice == "2":
+                executeSelect("SELECT DEPT_CODE, COURSE_NUM, BUILDING, ROOM_NUM, DAYS, START_TIME, END_TIME, (MAX_ENROLLMENT - CURRENT_ENROLLMENT) AS seats_available FROM SECTION WHERE COURSE_NUM LIKE '"+thirdchoice +"%' AND MAX_ENROLLMENT>CURRENT_ENROLLMENT;")
 
+
+    elif choice == "3":
+        # Display all courses
+        executeSelect("SELECT * FROM COURSE;")
+        # Ask user what course they want to add a section for
+        selectedCourse = input("Please enter the course number that you want to add a section for: ")
+        selectedDept = input("Please enter the department code that you want to add a section for: ")
+        selectedProf = input("Please enter the professor ID that you want to add a section for: ")
+        #Getting all input for adding to section table
+        selectedRoom = input("Please enter the room number that the section will be held in: ")
+        selectedBuilding = input("Please enter the building that the section will be held in: ")
+        selectedDays = input("Please enter the days that the section will be held on: ")
+        selectedStartTime = input("Please enter the start time of the section: ")
+        selectedEndTime = input("Please enter the end time of the section: ")
+        selectedStartDay = input("Please enter the start day of the section: ")
+        selectedEndDay = input("Please select the end date of the section: ")
+        selectedMaxEnrollment = input("Please enter the maximum enrollment of the section: ")
+        selectedCurrentEnrollment = input("Please enter the current enrollment of the section: ")
 
 close_db()  # close database
 
