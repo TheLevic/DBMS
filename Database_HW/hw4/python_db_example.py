@@ -119,18 +119,31 @@ while choice != "6":
         executeSelect("SELECT * FROM COURSE;")
         # Ask user what course they want to add a section for
         selectedCourse = input("Please enter the course number that you want to add a section for: ")
+        
+
         selectedSID = getUniqueSID()
+
         selectedDept = input("Please enter the department code that you want to add a section for: ")
+
+
         selectedProf = input("Please enter the professor ID that you want to add a section for: ")
-        #Getting all input for adding to section table
+       
         selectedRoom = input("Please enter the room number that the section will be held in: ")
+
         selectedBuilding = input("Please enter the building that the section will be held in: ")
+
         selectedDays = input("Please enter the days that the section will be held on: ")
+
         selectedStartTime = input("Please enter the start time of the section: ")
+
         selectedEndTime = input("Please enter the end time of the section: ")
+
         selectedStartDay = input("Please enter the start day of the section: ")
+
         selectedEndDay = input("Please select the end date of the section: ")
+
         selectedMaxEnrollment = input("Please enter the maximum enrollment of the section: ")
+        
         selectedCurrentEnrollment = input("Please enter the current enrollment of the section: ")
 
         # Check that all input variables are not null
