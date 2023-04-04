@@ -59,8 +59,10 @@ def getUniqueSID():
 
 
 
-mysql_username = 'lccrider'  # please change to your username
-mysql_password = 'rao8eeMu'  # please change to your MySQL password
+#mysql_username = 'lccrider'  # please change to your username
+#mysql_password = 'rao8eeMu'  # please change to your MySQL password
+mysql_username = 'srs043'  # please change to your username
+mysql_password = 'oow8Nu4o'  # please change to your MySQL password
 try:
     open_database('localhost', mysql_username, mysql_password, mysql_username)  # open database
     print("Database opened successfully\n\n")
@@ -156,6 +158,23 @@ while choice != "6":
             executeSelect("SELECT * FROM SECTION;") 
         else:
             print("Sorry, you must enter all values. Nothing can be null.")
+    
+    elif choice == "4":
+        selectedDept = input("Please enter the department code of the section you would like to update: ")
+        selectedCourse = input("Please enter the course number of the section you would like to update: ")
+        executeSelect("SELECT * FROM SECTION WHERE COURSE_NUM = '"+selectedCourse+"' AND DEPT_CODE = '"+selectedDept+"';")
+        selectedSID = input("Please enter the SID of the section you would like to update: ")
+        selectedChange = input("What attribute would you like to change?: ")
+        if selectedChange == "SID":
+            print("Sorry, you cannot change the SID as it is the primary key")
+        elif selectedChange == "DEPT_CODE" or selectedChange == "COURSE_NUM" or selectedChange == "PROF_ID" or selectedChange == "ROOM_NUM" or selectedChange == "BUILDING" or selectedChange == "DAYS" or selectedChange == "START_TIME" or selectedChange == "END_TIME" or selectedChange == "START_DAY" or selectedChange == "END_DAY" or selectedChange == "MAX_ENROLLMENT" or selectedChange == "CURRENT_ENROLLMENT":
+            newValue = input("please input desired new value: ")
+            executeUpdate("UPDATE SECTION SET "+selectedChange+" = '"+newValue+"'WHERE SID = '"+selectedSID+"';")
+        else:
+            print("sorry, that is an invalid input")
+    
+    elif choice == "5":
+        executeSelect("SELECT SUM(CURRENT_ENROLLMENT) FROM SECTION GROUP BY DEPT_CODE;")
 
 close_db()  # close database
 
