@@ -156,23 +156,10 @@ while choice != "6":
         executeSelect("SELECT * FROM COURSE;")
 
         selectedCourse = input("Please enter the course number that you want to add a section for: ")
-        try:
-            selectedCourse = int(selectedCourse)
-            selectedCourse = str(selectedCourse)
-        except:
-            print("Sorry, invalid input. Please try again.")
-        
 
         selectedSID = getUniqueSID()
 
         selectedDept = input("Please enter the department code that you want to add a section for: ")
-        try:
-            selectedDept = int(selectedDept)
-            slectedDept = str(selectedDept)
-        except:
-            print("Sorry, invalid input. Please try again.")
-
-
 
 
         selectedProf = input("Please enter the professor ID that you want to add a section for: ")
