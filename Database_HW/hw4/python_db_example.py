@@ -179,7 +179,7 @@ while choice != "6":
 
         while True:
             selectedBuilding = input("Please enter the building that the section will be held in: ")
-            if (selectedBuilding == "JBHT" or selectedBuilding == "MEEG" or selectedBuilding == "BELL"):
+            if (selectedBuilding == "JBHT" or selectedBuilding == "jbht" or selectedBuilding == "MEEG" or selectedBuilding == "meeg" or selectedBuilding == "BELL" or selectedBuilding == "bell"):
                break 
             else:
                 print("Sorry, invalid input. Please try again.")
@@ -187,7 +187,7 @@ while choice != "6":
 
         while True:
             selectedDays = input("Please enter the days that the section will be held on: ")
-            if (selectedDays == "MWF" or selectedDays == "TR"):
+            if (selectedDays == "MWF" or selectedDays == "mwf" or selectedDays == "TR" or selectedDays == "tr"):
                 break
             else:
                 print("Sorry, invalid input. Please try again.")
