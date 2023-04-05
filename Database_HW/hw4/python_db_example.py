@@ -59,10 +59,10 @@ def getUniqueSID():
 
 
 
-#mysql_username = 'lccrider'  # please change to your username
-#mysql_password = 'rao8eeMu'  # please change to your MySQL password
-mysql_username = 'srs043'  # please change to your username
-mysql_password = 'oow8Nu4o'  # please change to your MySQL password
+mysql_username = 'lccrider'  # please change to your username
+mysql_password = 'rao8eeMu'  # please change to your MySQL password
+# mysql_username = 'srs043'  # please change to your username
+# mysql_password = 'oow8Nu4o'  # please change to your MySQL password
 try:
     open_database('localhost', mysql_username, mysql_password, mysql_username)  # open database
     print("Database opened successfully\n\n")
@@ -119,22 +119,57 @@ while choice != "6":
     elif choice == "3":
         # Display all courses
         executeSelect("SELECT * FROM COURSE;")
-        # Ask user what course they want to add a section for
+
         selectedCourse = input("Please enter the course number that you want to add a section for: ")
+        try:
+            selectedCourse = int(selectedCourse)
+            selectedCourse = str(selectedCourse)
+        except:
+            print("Sorry, invalid input. Please try again.")
         
 
         selectedSID = getUniqueSID()
 
         selectedDept = input("Please enter the department code that you want to add a section for: ")
+        try:
+            selectedDept = int(selectedDept)
+            slectedDept = str(selectedDept)
+        except:
+            print("Sorry, invalid input. Please try again.")
+
+
 
 
         selectedProf = input("Please enter the professor ID that you want to add a section for: ")
+        try:
+            selectedProf = int(selectedProf)
+            selectedProf = str(selectedProf)
+        except:
+            print("Sorry, invalid input. Please try again.")
        
         selectedRoom = input("Please enter the room number that the section will be held in: ")
+        try:
+            selectedRoom = int(selectedRoom)
+            selectedRoom = str(selectedRoom)
+        except:
+            print("Sorry, invalid input. Please try again.")
 
-        selectedBuilding = input("Please enter the building that the section will be held in: ")
 
-        selectedDays = input("Please enter the days that the section will be held on: ")
+        while True:
+            selectedBuilding = input("Please enter the building that the section will be held in: ")
+            if (selectedBuilding == "JBHT" or selectedBuilding == "MEEG" or selectedBuilding == "BELL"):
+               break 
+            else:
+                print("Sorry, invalid input. Please try again.")
+            
+
+        while True:
+            selectedDays = input("Please enter the days that the section will be held on: ")
+            if (selectedDays == "MWF" or selectedDays == "TR"):
+                break
+            else:
+                print("Sorry, invalid input. Please try again.")
+
 
         selectedStartTime = input("Please enter the start time of the section: ")
 
@@ -145,8 +180,18 @@ while choice != "6":
         selectedEndDay = input("Please select the end date of the section: ")
 
         selectedMaxEnrollment = input("Please enter the maximum enrollment of the section: ")
+        try:
+            selectedMaxEnrollment = int(selectedMaxEnrollment)
+            selectedMaxEnrollment = str(selectedMaxEnrollment)
+        except:
+            print("Sorry, invalid input. Please try again.")
         
         selectedCurrentEnrollment = input("Please enter the current enrollment of the section: ")
+        try:
+            selectedCurrentEnrollment = int(selectedCurrentEnrollment)
+            selectedCurrentEnrollment = str(selectedCurrentEnrollment)
+        except:
+            print("Sorry, invalid input. Please try again.")
 
         # Check that all input variables are not null
         if selectedCourse != "" and selectedDept != "" and selectedProf != "" and selectedRoom != "" and selectedBuilding != "" and selectedDays != "" and selectedStartTime != "" and selectedEndTime != "" and selectedStartDay != "" and selectedEndDay != "" and selectedMaxEnrollment != "" and selectedCurrentEnrollment != "":
