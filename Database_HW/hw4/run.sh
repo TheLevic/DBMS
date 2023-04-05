@@ -7,8 +7,6 @@ put SID.txt
 exit
 EOF
 ssh lccrider@turing.uark.edu <<EOF
-echo "Starting typescript"
-typescript -f session.log
 chmod +x runpython.sh
 chmod +x hw3_soln.sh
 ./runpython.sh
@@ -79,6 +77,5 @@ PROF_ID
 csce
 5
 6
-echo "Stopping typescript"
 exit
 EOF
