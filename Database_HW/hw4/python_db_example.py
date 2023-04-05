@@ -59,10 +59,10 @@ def getUniqueSID():
 
 
 
-mysql_username = 'lccrider'  # please change to your username
-mysql_password = 'rao8eeMu'  # please change to your MySQL password
-# mysql_username = 'srs043'  # please change to your username
-# mysql_password = 'oow8Nu4o'  # please change to your MySQL password
+# mysql_username = 'lccrider'  # please change to your username
+# mysql_password = 'rao8eeMu'  # please change to your MySQL password
+mysql_username = 'srs043'  # please change to your username
+mysql_password = 'oow8Nu4o'  # please change to your MySQL password
 try:
     open_database('localhost', mysql_username, mysql_password, mysql_username)  # open database
     print("Database opened successfully\n\n")
@@ -73,7 +73,7 @@ except Exception as e:
 choice = 0
 
 while choice != "6":
-    print("Please select on of the following options:")
+    print("Please select one of the following options:")
     print("1. Find Professors")
     print("2. Find Sections")
     print("3. Add Section")
@@ -242,8 +242,13 @@ while choice != "6":
             print("Sorry, you must enter all values. Nothing can be null.")
     
     elif choice == "4":
+        #gets the department and course
         selectedDept = input("Please enter the department code of the section you would like to update: ")
+
         selectedCourse = input("Please enter the course number of the section you would like to update: ")
+
+        #list the courses in this department
+        
         executeSelect("SELECT * FROM SECTION WHERE COURSE_NUM = '"+selectedCourse+"' AND DEPT_CODE = '"+selectedDept+"';")
         selectedSID = input("Please enter the SID of the section you would like to update: ")
         selectedChange = input("What attribute would you like to change?: ")
@@ -251,12 +256,15 @@ while choice != "6":
             print("Sorry, you cannot change the SID as it is the primary key")
         elif selectedChange == "DEPT_CODE" or selectedChange == "COURSE_NUM" or selectedChange == "PROF_ID" or selectedChange == "ROOM_NUM" or selectedChange == "BUILDING" or selectedChange == "DAYS" or selectedChange == "START_TIME" or selectedChange == "END_TIME" or selectedChange == "START_DAY" or selectedChange == "END_DAY" or selectedChange == "MAX_ENROLLMENT" or selectedChange == "CURRENT_ENROLLMENT":
             newValue = input("please input desired new value: ")
-            executeUpdate("UPDATE SECTION SET "+selectedChange+" = '"+newValue+"'WHERE SID = '"+selectedSID+"';")
+            try:
+                executeUpdate("UPDATE SECTION SET "+selectedChange+" = '"+newValue+"'WHERE SID = '"+selectedSID+"';")
+            except:
+                print("there was an error with one of the inputs, please try again")
         else:
             print("sorry, that is an invalid input")
     
     elif choice == "5":
-        executeSelect("SELECT SUM(CURRENT_ENROLLMENT) FROM SECTION GROUP BY DEPT_CODE;")
+        executeSelect("SELECT SUM(CURRENT_ENROLLMENT), DEPT_CODE FROM SECTION GROUP BY DEPT_CODE ORDER BY SUM(CURRENT_ENROLLMENT);")
 
 close_db()  # close database
 
