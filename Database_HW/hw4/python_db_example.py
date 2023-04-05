@@ -85,7 +85,13 @@ while choice != "6":
     if choice == "1":
         # Select all sections in the spection table
         executeSelect("SELECT * FROM DEPT;")
-        selectedDept = input("Enter the department code for the professors you want to show: ")
+        while True:
+            selectedDept = input("Enter the department code for the professors you want to show: ")
+            if (selectedDept == "CSCE" or "csce" or selectedDept == "ELEG" or "eleg" or selectedDept == "MEEG" or "meeg"):
+                break
+            else:
+                print("Invalid choice, please try again")
+        
         executeSelect("SELECT * FROM PROFESSOR WHERE DEPT_CODE = '" + selectedDept + "';")
     elif choice == "2":
         print("Please select on of the following options:")
@@ -94,7 +100,7 @@ while choice != "6":
 
         while True:
             choice = input("Enter your choice: ")
-            if (choice == 1 or choice == 2):
+            if (choice == "1" or choice == "2"):
                 break
             else:
                 print("Invalid choice, please try again")
@@ -106,7 +112,7 @@ while choice != "6":
 
         while True:
             innerchoice = input("Enter your choice: ")
-            if (innerchoice == 1 or innerchoice == 2):
+            if (innerchoice == "1" or innerchoice == "2"):
                 break
             else:
                 print("Invalid choice, please try again")
@@ -114,9 +120,9 @@ while choice != "6":
 
 
         if innerchoice == "1":
-            while true:
+            while True:
                 thirdchoice = input("Please input Department Code:")
-                if (thirdchoice == "CSCE" or thirdchoice == "ELEG" or thirdchoice == "MEEG"):
+                if (thirdchoice == "CSCE" or "csce" or thirdchoice == "ELEG" or "eleg" or thirdchoice == "MEEG" or "meeg"):
                     break
                 else:
                     print("Invalid choice, please try again")

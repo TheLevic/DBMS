@@ -9,7 +9,7 @@ ssh lccrider@turing.uark.edu <<EOF
 chmod +x runpython.sh
 ./runpython.sh
 1
-MEEG
+csce
 2
 1
 1
