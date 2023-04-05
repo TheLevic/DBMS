@@ -85,9 +85,10 @@ while choice != "6":
     if choice == "1":
         # Select all sections in the spection table
         executeSelect("SELECT * FROM DEPT;")
+
         while True:
             selectedDept = input("Enter the department code for the professors you want to show: ")
-            if (selectedDept == "CSCE" or "csce" or selectedDept == "ELEG" or "eleg" or selectedDept == "MEEG" or "meeg"):
+            if (selectedDept == "CSCE" or selectedDept == "csce" or selectedDept == "ELEG" or selectedDept == "eleg" or selectedDept == "MEEG" or selectedDept == "meeg" ):
                 break
             else:
                 print("Invalid choice, please try again")
@@ -205,6 +206,7 @@ while choice != "6":
                 print("Sorry, invalid input. Please try again.")
 
 
+        #Need to error check these
         selectedStartTime = input("Please enter the start time of the section: ")
 
         selectedEndTime = input("Please enter the end time of the section: ")
