@@ -85,21 +85,55 @@ while choice != "6":
     if choice == "1":
         # Select all sections in the spection table
         executeSelect("SELECT * FROM DEPT;")
-        selectedDept = input("Enter the department code for the professors you want to show: ")
+        while True:
+            selectedDept = input("Enter the department code for the professors you want to show: ")
+            if (selectedDept == "CSCE" or "csce" or selectedDept == "ELEG" or "eleg" or selectedDept == "MEEG" or "meeg"):
+                break
+            else:
+                print("Invalid choice, please try again")
+        
         executeSelect("SELECT * FROM PROFESSOR WHERE DEPT_CODE = '" + selectedDept + "';")
     elif choice == "2":
         print("Please select on of the following options:")
         print("1. List all Classes")
         print("2. List all open classes")
-        choice = input("Enter your choice: ")
+
+        while True:
+            choice = input("Enter your choice: ")
+            if (choice == "1" or choice == "2"):
+                break
+            else:
+                print("Invalid choice, please try again")
+       
+       
         print("Please select on of the following options:")
         print("1. List Classes by department")
         print("2. List Classes by level")
-        innerchoice = input("Enter your choice: ")
+
+        while True:
+            innerchoice = input("Enter your choice: ")
+            if (innerchoice == "1" or innerchoice == "2"):
+                break
+            else:
+                print("Invalid choice, please try again")
+
+
+
         if innerchoice == "1":
-            thirdchoice = input("Please input Department Code:")
+            while True:
+                thirdchoice = input("Please input Department Code:")
+                if (thirdchoice == "CSCE" or "csce" or thirdchoice == "ELEG" or "eleg" or thirdchoice == "MEEG" or "meeg"):
+                    break
+                else:
+                    print("Invalid choice, please try again")
         if innerchoice == "2":
-            thirdchoice = input("Please input Level of class:")
+            while True:
+                thirdchoice = input("Please input Level of class (i.e: 1, 2, 3, 4, 5, not 1000, 2000, etc..): ")
+                if (thirdchoice == "1" or thirdchoice == "2" or thirdchoice == "3" or thirdchoice == "4" or thirdchoice == "5"):
+                    break
+                else:
+                    print("Invalid choice, please try again")
+
        
         # Listing classes regardless of whether they are open
         if choice == "1":
@@ -196,8 +230,11 @@ while choice != "6":
         # Check that all input variables are not null
         if selectedCourse != "" and selectedDept != "" and selectedProf != "" and selectedRoom != "" and selectedBuilding != "" and selectedDays != "" and selectedStartTime != "" and selectedEndTime != "" and selectedStartDay != "" and selectedEndDay != "" and selectedMaxEnrollment != "" and selectedCurrentEnrollment != "":
             # Insert new section into section table
-            insert("SECTION", "'" + selectedSID + "', '" + selectedDept + "', '" + selectedCourse + "', '" + selectedProf + "', '" + selectedRoom + "', '" + selectedBuilding + "', '" + selectedDays + "', '" + selectedStartTime + "', '" + selectedEndTime + "', '" + selectedStartDay + "', '" + selectedEndDay + "', '" + selectedMaxEnrollment + "', '" + selectedCurrentEnrollment + "'")            
+            try:
 
+                insert("SECTION", "'" + selectedSID + "', '" + selectedDept + "', '" + selectedCourse + "', '" + selectedProf + "', '" + selectedRoom + "', '" + selectedBuilding + "', '" + selectedDays + "', '" + selectedStartTime + "', '" + selectedEndTime + "', '" + selectedStartDay + "', '" + selectedEndDay + "', '" + selectedMaxEnrollment + "', '" + selectedCurrentEnrollment + "'")            
+            except:
+                print("Sorry, there was an error. Please try again.")
 
             # Display all sections
             executeSelect("SELECT * FROM SECTION;") 
