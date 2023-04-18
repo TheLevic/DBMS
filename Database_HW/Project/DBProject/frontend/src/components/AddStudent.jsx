@@ -1,7 +1,7 @@
 import { useState } from "react";
 import React from "react";
 
-function addStudent() {
+function AddStudent() {
   const [student, setStudent] = useState("");
 
   let handleStudentInput = (event) => {
@@ -20,7 +20,6 @@ function addStudent() {
         value={student}
         onChange={handleStudentInput}
       />
-      <p>{student}</p>
     </div>
   );
 }
