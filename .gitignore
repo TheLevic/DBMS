@@ -6,3 +6,7 @@ Database_HW/hw1/python/Small.config
 Database_HW/hw1/python/Small.data
 Database_HW/hw1/python/Fortune500.data
 Database_HW/hw1/python/Fortune500.config
+.DS_Store
+Database_HW/.DS_Store
+Database_HW/Project/.DS_Store
+Database_HW/Project/DBProject/package-lock.json
