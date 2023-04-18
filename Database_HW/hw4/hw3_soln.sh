@@ -1,6 +1,6 @@
 mysql <<EOFMYSQL
-#use lccrider;
-use srs043;
+use lccrider;
+# use srs043;
 show tables;
 
 DROP TABLE SECTION;

@@ -2,6 +2,7 @@
 #  CHANGE:  MYUSERNAME and MYMYSQLPASSWORD in the test section of
 #  this program to your username and mysql password
 #  RUN: ./runpython.sh
+# Levi Crider and Spencer Smith
 
 import mysql.connector
 from tabulate import tabulate
@@ -59,10 +60,10 @@ def getUniqueSID():
 
 
 
-# mysql_username = 'lccrider'  # please change to your username
-# mysql_password = 'rao8eeMu'  # please change to your MySQL password
-mysql_username = 'srs043'  # please change to your username
-mysql_password = 'oow8Nu4o'  # please change to your MySQL password
+mysql_username = 'lccrider'  # please change to your username
+mysql_password = 'rao8eeMu'  # please change to your MySQL password
+# mysql_username = 'srs043'  # please change to your username
+# mysql_password = 'oow8Nu4o'  # please change to your MySQL password
 try:
     open_database('localhost', mysql_username, mysql_password, mysql_username)  # open database
     print("Database opened successfully\n\n")
