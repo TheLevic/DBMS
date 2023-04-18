@@ -12,3 +12,4 @@ Database_HW/Project/.DS_Store
 Database_HW/Project/DBProject/backend/node_modules
 Database_HW/Project/DBProject/frontend/package-lock.json
 Database_HW/Project/DBProject/backend/package-lock.json
+Database_HW/Project/DBProject/backend/.env
