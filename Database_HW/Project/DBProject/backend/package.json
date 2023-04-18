@@ -1,0 +1,14 @@
+{
+  "name": "dbproject-backend",
+  "version": "1.0.0",
+  "description": "Backend for dbproject",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Levi Crider",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
