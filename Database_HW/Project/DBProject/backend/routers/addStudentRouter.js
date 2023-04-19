@@ -1,7 +1,10 @@
 const express = require("express");
+const multer = require("multer");
 const router = express.Router();
 
-router.post("/", (req, res) => {
+const upload = multer();
+
+router.post("/", upload.none(), (req, res) => {
   if (req.body.StudentID && req.body.Name && req.body.Major) {
     try {
       const studentID = req.body.StudentID;
@@ -13,7 +16,7 @@ router.post("/", (req, res) => {
       return res.status(500).send("Internal Server Error");
     }
   } else {
-    return res.status(400).send("Bad Request");
+    return res.status(400).send("Oh");
   }
 });
 
