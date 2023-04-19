@@ -1,10 +1,13 @@
 import React from "react";
+import axios from "axios";
 
 function AddStudent() {
+  //Using state to store the values of the form inputs
   const [Name, setName] = React.useState("");
   const [StudentID, setStudentID] = React.useState(0);
   const [Major, setMajor] = React.useState("");
 
+  //These are our handlers for the form inputs
   let handleStudentIDChange = (e) => {
     setStudentID(e.target.value);
   };
@@ -17,9 +20,26 @@ function AddStudent() {
     setMajor(e.target.value);
   };
 
+  /*
+   * This is our handler for the form submit event
+   * We are using axios to send a POST request to our API to add a new student to the database
+   */
+  let handleSubmit = (e) => {
+    e.preventDefault();
+    axios
+      .post("/api/addStudent", {
+        StudentID: StudentID,
+        Name: Name,
+        Major: Major,
+      })
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
   return (
     <div>
-      <form>
+      <form onSubmit={handleSubmit}>
         <label htmlFor="StudentID">StudentID</label>
         <input
           type="number"
@@ -48,6 +68,9 @@ function AddStudent() {
           value={Major}
           onChange={handleMajorChange}
         />
+        <button type="submit" className="btn">
+          Submit
+        </button>
       </form>
     </div>
   );
