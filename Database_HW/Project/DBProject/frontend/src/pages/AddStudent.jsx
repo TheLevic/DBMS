@@ -26,14 +26,23 @@ function AddStudent() {
    */
   let handleSubmit = (e) => {
     e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("StudentID", StudentID);
+    formData.append("Name", Name);
+    formData.append("Major", Major);
+
     axios
-      .post("/api/addStudent", {
-        StudentID: StudentID,
-        Name: Name,
-        Major: Major,
+      .post("/api/addstudent", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
       })
       .then((res) => {
         console.log(res);
+      })
+      .catch((err) => {
+        console.log(err);
       });
   };
 
