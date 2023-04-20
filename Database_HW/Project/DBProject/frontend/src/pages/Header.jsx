@@ -6,13 +6,25 @@ function Header() {
   let handleClickAddStudent = () => {
     nav("/addstudent");
   };
+
+  let handleClickAddJob = () => {
+    nav("/addjob");
+  };
+
+  let handleClickAddApplication = () => {
+    nav("/addapplication");
+  };
   return (
     <div className="flex align-middle items-center justify-evenly">
       <button onClick={handleClickAddStudent} className="btn">
         Add Student
       </button>
-      <button className="btn">Add Job</button>
-      <button className="btn">Add Application</button>
+      <button onClick={handleClickAddJob} className="btn">
+        Add Job
+      </button>
+      <button onClick={handleClickAddApplication} className="btn">
+        Add Application
+      </button>
     </div>
   );
 }
