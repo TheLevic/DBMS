@@ -1,5 +1,7 @@
 import React from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function AddJob() {
   //Using state to store the values of the form inputs
@@ -8,6 +10,8 @@ function AddJob() {
   const [DesiredMajor, setDesiredMajor] = React.useState("");
   const [Title, setTitle] = React.useState("");
   const [Salary, setSalary] = React.useState(0);
+
+  const nav = useNavigate();
 
   //These are our handlers for the form inputs
   let handleJobIDChange = (e) => {
@@ -51,10 +55,17 @@ function AddJob() {
         },
       })
       .then((res) => {
-        console.log(res);
+        if (res.data == "OK") {
+          toast.success("Job Added Successfully");
+          nav("/");
+        }
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.data == "Please enter all the fields") {
+          toast.error("Please enter all fields");
+        } else {
+          toast.error("Something went wrong, please try again");
+        }
       });
   };
 
