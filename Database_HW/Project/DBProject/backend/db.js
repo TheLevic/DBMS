@@ -10,14 +10,15 @@ const pool = mysql.createPool({
   database: process.env.MYSQL_DATABASE,
 });
 
-let getAllStudents = async () => {
+// Method to insert student into the database
+let insertStudentToDB = async (student) => {
   try {
-    let [rows] = await pool.query("SELECT * FROM STUDENTS");
-    console.log(rows);
-    return;
+    let query = "INSERT INTO STUDENTS (STUDENTNAME, MAJOR) VALUES (?,?)";
+    await pool.query(query, [student.name, student.major]);
+    return true;
   } catch (error) {
-    console.log(error);
+    return false;
   }
 };
 
-getAllStudents();
+module.exports = { insertStudentToDB };
