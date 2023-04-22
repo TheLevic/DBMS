@@ -4,14 +4,9 @@ import axios from "axios";
 function AddStudent() {
   //Using state to store the values of the form inputs
   const [Name, setName] = React.useState("");
-  const [StudentID, setStudentID] = React.useState(0);
   const [Major, setMajor] = React.useState("");
 
   //These are our handlers for the form inputs
-  let handleStudentIDChange = (e) => {
-    setStudentID(e.target.value);
-  };
-
   let handleNameChange = (e) => {
     setName(e.target.value);
   };
@@ -28,7 +23,6 @@ function AddStudent() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("StudentID", StudentID);
     formData.append("Name", Name);
     formData.append("Major", Major);
 
@@ -49,15 +43,6 @@ function AddStudent() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="StudentID">StudentID</label>
-        <input
-          type="number"
-          name="StudentID"
-          id="StudentID"
-          value={StudentID}
-          onChange={handleStudentIDChange}
-          className="text-black bg-blue-200 rounded-md p-2"
-        />
         <label htmlFor="Name">Name</label>
         <input
           type="text"
@@ -65,12 +50,12 @@ function AddStudent() {
           id="name"
           value={Name}
           onChange={handleNameChange}
-          className="text-black bg-blue-200 rounded-md p-2"
+          className="text-black bg-blue-200 rounded-md p-2 m-2"
         />
 
         <label htmlFor="Major">Major</label>
         <input
-          className="bg-blue-200 rounded-md p-2"
+          className="bg-blue-200 rounded-md p-2 m-2"
           type="text"
           name="Major"
           id="Major"
