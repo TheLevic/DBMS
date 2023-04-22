@@ -32,4 +32,16 @@ let getAllMajors = async () => {
   }
 };
 
-module.exports = { insertStudentToDB, getAllMajors };
+let getStudentsByMajor = async (major) => {
+  try {
+    query = "SELECT STUDENTNAME FROM STUDENTS WHERE MAJOR = ?";
+    let [students] = await pool.query(query, [major]);
+    //Map students to only return the names
+    students = students.map((student) => student.STUDENTNAME);
+    return students;
+  } catch (error) {
+    return false;
+  }
+};
+
+module.exports = { insertStudentToDB, getAllMajors, getStudentsByMajor };
