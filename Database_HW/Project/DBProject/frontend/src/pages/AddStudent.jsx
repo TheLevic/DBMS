@@ -1,10 +1,14 @@
 import React from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function AddStudent() {
   //Using state to store the values of the form inputs
   const [Name, setName] = React.useState("");
   const [Major, setMajor] = React.useState("");
+
+  const nav = useNavigate();
 
   //These are our handlers for the form inputs
   let handleNameChange = (e) => {
@@ -33,10 +37,19 @@ function AddStudent() {
         },
       })
       .then((res) => {
-        console.log(res);
+        if (res.status === 200) {
+          toast.success("Student Added Successfully");
+          nav("/");
+        } else if (res.status === 400) {
+          toast.error("Error. Please try again");
+        } else if (res.status === 500) {
+          toast.error("Server Error. Please try again later.");
+        } else {
+          toast.error("Error. ");
+        }
       })
       .catch((err) => {
-        console.log(err);
+        toast.error("Error. Make sure all fields are filled out correctly.");
       });
   };
 
