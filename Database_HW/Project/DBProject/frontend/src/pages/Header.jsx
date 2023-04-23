@@ -28,7 +28,6 @@ function Header() {
   };
 
   return (
-
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="border-2 border-gray-300 rounded-lg p-8 shadow-lg">
         <h1 className="font-bold text-4xl mb-8">Database Application</h1>
@@ -62,6 +61,12 @@ function Header() {
             className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded"
           >
             Get Jobs
+          </button>
+          <button
+            onClick={handleClickGetApplications}
+            className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded"
+          >
+            Get Applications
           </button>
         </div>
       </div>
