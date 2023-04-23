@@ -12,7 +12,7 @@ function AddApplication() {
   useEffect(() => {
     let formData = new FormData();
     formData.append("Major", "All");
-    axios.post("/api/getstudentsbymajor", formData).then((res) => {
+    axios.get("/api/getlistofstudentinfo", formData).then((res) => {
       if (res.status === 200 && res.data) {
         setListOfStudents(res.data);
         return;
@@ -51,6 +51,29 @@ function AddApplication() {
 
   let handleSubmit = (e) => {
     e.preventDefault();
+    //Need to get the student id and job id from the selected student and job
+    let studentId = "";
+    let jobId = "";
+    listOfStudents.forEach((student) => {
+      if (student.Name === selectedStudent) {
+        studentId = student._id;
+      }
+    });
+    listOfJobs.forEach((job) => {
+      if (job.Title === selectedJob) {
+        jobId = job._id;
+      }
+    });
+    let formData = new FormData();
+    formData.append("StudentId", studentId);
+    formData.append("JobId", jobId);
+    axios.post("/api/addapplication", formData).then((res) => {
+      if (res.status === 200 && res.data) {
+        toast.success("Application added");
+        return;
+      }
+      toast.error("Error adding application");
+    });
   };
 
   return (

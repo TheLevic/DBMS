@@ -49,6 +49,16 @@ let getAllStudents = async () => {
   }
 };
 
+let getListOfStudents = async () => {
+  try {
+    query = "SELECT * FROM STUDENTS";
+    let [rows] = await pool.query(query);
+    return rows;
+  } catch (error) {
+    console.log("error");
+  }
+};
+
 let getAllJobs = async () => {
   try {
     query = "SELECT JOBTITLE FROM JOBS";
@@ -113,4 +123,5 @@ module.exports = {
   getAllDesiredMajors,
   getAllStudents,
   getAllJobs,
+  getListOfStudents,
 };
