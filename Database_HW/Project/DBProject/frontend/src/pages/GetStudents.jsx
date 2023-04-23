@@ -68,7 +68,7 @@ function GetStudents() {
       {listOfStudents.length > 0 && (
         <div>
           <h2>Students with {selectedMajor} major:</h2>
-          <ul>
+          <ul className="font-bold text-blue-600">
             {listOfStudents.map((student, index) => (
               <li key={index}>{student}</li>
             ))}
