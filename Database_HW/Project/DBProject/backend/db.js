@@ -21,11 +21,16 @@ let insertStudentToDB = async (student) => {
   }
 };
 
-
 let insertJobToDB = async (job) => {
   try {
-    let query = "INSERT INTO JOBS (COMPANYNAME, JOBTITLE, SALARY, DESIREDMAJOR) VALUES (?,?,?,?)";
-    await pool.query(query, [job.CompanyName, job.JobTitle, job.Salary, job.DesiredMajor]);
+    let query =
+      "INSERT INTO JOBS (COMPANYNAME, JOBTITLE, SALARY, DESIREDMAJOR) VALUES (?,?,?,?)";
+    await pool.query(query, [
+      job.CompanyName,
+      job.JobTitle,
+      job.Salary,
+      job.DesiredMajor,
+    ]);
     return true;
   } catch (error) {
     console.log(error);
@@ -48,7 +53,6 @@ let getAllJobs = async () => {
   try {
     query = "SELECT JOBTITLE FROM JOBS";
     [rows] = await pool.query(query);
-    console.log(rows);
     const jobs = rows.map((row) => row.JOBTITLE);
     return jobs;
   } catch (error) {
@@ -108,5 +112,5 @@ module.exports = {
   getJobsByMajor,
   getAllDesiredMajors,
   getAllStudents,
-  getAllJobs
+  getAllJobs,
 };
