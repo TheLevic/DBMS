@@ -25,7 +25,6 @@ let getAllStudents = async () => {
   try {
     query = "SELECT STUDENTNAME FROM STUDENTS";
     [rows] = await pool.query(query);
-    console.log(rows);
     const students = rows.map((row) => row.STUDENTNAME);
     return students;
   } catch (error) {
