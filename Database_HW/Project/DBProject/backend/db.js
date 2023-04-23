@@ -27,9 +27,7 @@ let getAllMajors = async () => {
     let [rows] = await pool.query(query);
     const majors = rows.map((row) => row.MAJOR);
     return majors;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 let getAllDesiredMajors = async () => {
@@ -38,9 +36,7 @@ let getAllDesiredMajors = async () => {
     let [rows] = await pool.query(query);
     const majors = rows.map((row) => row.DESIREDMAJOR);
     return majors;
-  } catch (error) {
-    console.log(error);
-  }
+  } catch (error) {}
 };
 
 let getStudentsByMajor = async (major) => {
@@ -67,4 +63,10 @@ let getJobsByMajor = async (major) => {
   }
 };
 
-module.exports = { insertStudentToDB, getAllMajors, getStudentsByMajor, getJobsByMajor, getAllDesiredMajors };
+module.exports = {
+  insertStudentToDB,
+  getAllMajors,
+  getStudentsByMajor,
+  getJobsByMajor,
+  getAllDesiredMajors,
+};
