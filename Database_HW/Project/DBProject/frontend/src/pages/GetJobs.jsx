@@ -10,8 +10,10 @@ function GetJobs() {
   useEffect(() => {
     axios.get("/api/getdesiredmajors").then((response) => {
       if (response.status === 200 && response.data) {
-        setListOfMajors(response.data);
-        setSelectedMajor(response.data[0]);
+        setListOfMajors(["All", ...response.data]);
+        setSelectedMajor("All");
+        //setListOfMajors(response.data);
+        //setSelectedMajor(response.data[0]);
       } else {
         toast.error("Could not get majors");
       }

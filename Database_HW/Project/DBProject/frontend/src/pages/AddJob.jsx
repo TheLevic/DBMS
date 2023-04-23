@@ -6,7 +6,6 @@ import { useNavigate } from "react-router-dom";
 function AddJob() {
   //Using state to store the values of the form inputs
   const [Name, setName] = React.useState("");
-  const [JobID, setJobID] = React.useState(0);
   const [DesiredMajor, setDesiredMajor] = React.useState("");
   const [Title, setTitle] = React.useState("");
   const [Salary, setSalary] = React.useState(0);
@@ -14,9 +13,6 @@ function AddJob() {
   const nav = useNavigate();
 
   //These are our handlers for the form inputs
-  let handleJobIDChange = (e) => {
-    setJobID(e.target.value);
-  };
 
   let handleNameChange = (e) => {
     setName(e.target.value);
@@ -42,7 +38,6 @@ function AddJob() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("JobID", JobID);
     formData.append("Name", Name);
     formData.append("DesiredMajor", DesiredMajor);
     formData.append("Title", Title);
@@ -55,9 +50,15 @@ function AddJob() {
         },
       })
       .then((res) => {
-        if (res.data == "OK") {
+        if (res.status === 200) {
           toast.success("Job Added Successfully");
-          nav("/");
+          //nav("/");
+        } else if (res.status === 400) {
+          toast.error("Error. Please try again");
+        } else if (res.status === 500) {
+          toast.error("Server Error. Please try again later.");
+        } else {
+          toast.error("Error. ");
         }
       })
       .catch((err) => {
@@ -72,15 +73,6 @@ function AddJob() {
   return (
     <div>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="JobID">JobID</label>
-        <input
-          type="number"
-          name="JobID"
-          id="JobID"
-          value={JobID}
-          onChange={handleJobIDChange}
-          className="text-black bg-blue-200 rounded-md p-2"
-        />
         <label htmlFor="Name">Name</label>
         <input
           type="text"
