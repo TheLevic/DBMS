@@ -18,7 +18,6 @@ router.post("/", upload.none(), (req, res) => {
       const DesiredMajor = req.body.DesiredMajor;
       const JobTitle = req.body.Title;
       const Salary = req.body.Salary;
-      console.log(JobId, CompanyName, JobTitle, Salary, DesiredMajor);
       return res.status(200).send("OK");
     } catch (err) {
       return res.status(500).send("Internal Server Error");

@@ -10,7 +10,6 @@ router.post("/", upload.none(), async (req, res) => {
     const students = await getStudentsByMajor(major);
     return res.status(200).send(students);
   } catch (err) {
-    console.error(err);
     return res.status(500).send("Internal Server Error");
   }
 });
