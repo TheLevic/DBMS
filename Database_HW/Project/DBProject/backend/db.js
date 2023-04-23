@@ -21,6 +21,18 @@ let insertStudentToDB = async (student) => {
   }
 };
 
+
+let insertJobToDB = async (job) => {
+  try {
+    let query = "INSERT INTO JOBS (COMPANYNAME, JOBTITLE, SALARY, DESIREDMAJOR) VALUES (?,?,?,?)";
+    await pool.query(query, [job.CompanyName, job.JobTitle, job.Salary, job.DesiredMajor]);
+    return true;
+  } catch (error) {
+    console.log(error);
+    return false;
+  }
+};
+
 let getAllStudents = async () => {
   try {
     query = "SELECT STUDENTNAME FROM STUDENTS";
@@ -33,13 +45,27 @@ let getAllStudents = async () => {
   }
 };
 
+let getAllJobs = async () => {
+  try {
+    query = "SELECT JOBTITLE FROM JOBS";
+    [rows] = await pool.query(query);
+    console.log(rows);
+    const jobs = rows.map((row) => row.JOBTITLE);
+    return jobs;
+  } catch (error) {
+    console.log("error");
+  }
+};
+
 let getAllMajors = async () => {
   try {
     query = "SELECT DISTINCT MAJOR FROM STUDENTS";
     let [rows] = await pool.query(query);
     const majors = rows.map((row) => row.MAJOR);
     return majors;
-  } catch (error) {}
+  } catch (error) {
+    console.log("error");
+  }
 };
 
 let getAllDesiredMajors = async () => {
@@ -77,9 +103,11 @@ let getJobsByMajor = async (major) => {
 
 module.exports = {
   insertStudentToDB,
+  insertJobToDB,
   getAllMajors,
   getStudentsByMajor,
   getJobsByMajor,
   getAllDesiredMajors,
   getAllStudents,
+  getAllJobs
 };
