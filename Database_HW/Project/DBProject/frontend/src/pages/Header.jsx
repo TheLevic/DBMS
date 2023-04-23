@@ -23,7 +23,12 @@ function Header() {
     nav("/getjobs");
   };
 
+  let handleClickGetApplications = () => {
+    nav("/getapplications");
+  };
+
   return (
+
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="border-2 border-gray-300 rounded-lg p-8 shadow-lg">
         <h1 className="font-bold text-4xl mb-8">Database Application</h1>
