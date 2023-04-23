@@ -10,8 +10,8 @@ function GetStudents() {
   useEffect(() => {
     axios.get("/api/getmajors").then((response) => {
       if (response.status === 200 && response.data) {
-        setListOfMajors(response.data);
-        setSelectedMajor(response.data[0]);
+        setListOfMajors(["All", ...response.data]);
+        setSelectedMajor("All");
       } else {
         toast.error("Could not get majors");
       }
