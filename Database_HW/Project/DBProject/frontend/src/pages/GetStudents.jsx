@@ -38,39 +38,47 @@ function GetStudents() {
   };
 
   return (
-    <div>
-      <h1 className="font-bold font-sans text-3xl">
+    <div className="container mx-auto my-8">
+      <h1 className="font-bold text-4xl mb-4">
         List all students with a specific major
       </h1>
-      <form className="border-2 border-black" onSubmit={handleSubmit}>
-        <label htmlFor="major">Select major</label>
+      <form
+        className="border-2 border-gray-300 p-4 rounded-md"
+        onSubmit={handleSubmit}
+      >
+        <label htmlFor="major" className="block font-bold mb-2">
+          Select major:
+        </label>
         <select
-          className="p-4 m-2"
+          className="border-2 border-gray-300 p-2 rounded-md mb-4"
           value={selectedMajor}
           onChange={(event) => {
             setSelectedMajor(event.target.value);
           }}
         >
           {listOfMajors.map((major, index) => (
-            <option
-              key={index}
-              className="p-2 text-black bg-blue-200"
-              value={major}
-            >
+            <option key={index} value={major}>
               {major}
             </option>
           ))}
         </select>
-        <button className="btn" type="submit">
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+        >
           Submit
         </button>
       </form>
       {listOfStudents.length > 0 && (
-        <div>
-          <h2>Students with {selectedMajor} major:</h2>
-          <ul>
+        <div className="mt-8">
+          <h2 className="font-bold text-xl mb-4">
+            Students with {selectedMajor} major:
+          </h2>
+          <ul className="list-disc list-inside">
             {listOfStudents.map((student, index) => (
-              <li key={index}>{student}</li>
+              <li key={index} className="mb-2">
+                {student}
+              </li>
             ))}
           </ul>
         </div>

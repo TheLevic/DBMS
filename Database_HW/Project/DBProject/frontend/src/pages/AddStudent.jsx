@@ -54,28 +54,36 @@ function AddStudent() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="Name">Name</label>
+    <div className="bg-gray-100 p-4">
+      <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <label htmlFor="Name" className="font-bold text-gray-700">
+          Name
+        </label>
         <input
           type="text"
           name="name"
           id="name"
           value={Name}
           onChange={handleNameChange}
-          className="text-black bg-blue-200 rounded-md p-2 m-2"
+          className="px-3 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-blue-500"
         />
 
-        <label htmlFor="Major">Major</label>
+        <label htmlFor="Major" className="font-bold text-gray-700">
+          Major
+        </label>
         <input
-          className="bg-blue-200 rounded-md p-2 m-2"
+          className="px-3 py-2 rounded-lg border border-gray-400 focus:outline-none focus:border-blue-500"
           type="text"
           name="Major"
           id="Major"
           value={Major}
           onChange={handleMajorChange}
         />
-        <button type="submit" className="btn">
+
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-3 py-2 rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+        >
           Submit
         </button>
       </form>

@@ -1,64 +1,98 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 function AddApplication() {
-  //Using state to store the values of the form inputs
-  const [StudentID, setStudentID] = React.useState(0);
-  const [JobID, setJobID] = React.useState(0);
+  const [listOfStudents, setListOfStudents] = useState([]);
+  const [selectedStudent, setSelectedStudent] = useState("");
+  const [listOfJobs, setListOfJobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState("");
 
-  //These are our handlers for the form inputs
-  let handleStudentIDChange = (e) => {
-    setStudentID(e.target.value);
-  };
+  //useEffect to get all students and all jobs from the backend
+  useEffect(() => {
+    let formData = new FormData();
+    formData.append("Major", "All");
+    axios.post("/api/getstudentsbymajor", formData).then((res) => {
+      if (res.status === 200 && res.data) {
+        setListOfStudents(res.data);
+        return;
+      } else {
+        toast.error("Error getting students");
+        return;
+      }
+    });
+  }, []);
 
-  let handleJobIDChange = (e) => {
-    setJobID(e.target.value);
-  };
+  useEffect(() => {
+    if (listOfStudents.length > 0) {
+      setSelectedStudent(listOfStudents[0]);
+    }
+  }, [listOfStudents]);
 
-  /*
-   * This is our handler for the form submit event
-   * We are using axios to send a POST request to our API to add a new student to the database
-   */
+  useEffect(() => {
+    const formData = new FormData();
+    formData.append("Major", "All");
+    axios.post("/api/getjobsbymajor", formData).then((res) => {
+      if (res.status === 200 && res.data) {
+        setListOfJobs(res.data);
+        return;
+      } else {
+        toast.error("Error getting jobs");
+        return;
+      }
+    });
+  }, []);
+
+  useEffect(() => {
+    if (listOfJobs.length > 0) {
+      setSelectedJob(listOfJobs[0]);
+    }
+  }, [listOfJobs]);
+
   let handleSubmit = (e) => {
     e.preventDefault();
-
-    const formData = new FormData();
-    formData.append("StudentID", StudentID);
-    formData.append("JobID", JobID);
-
-    axios
-      .post("/api/addapplication", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {})
-      .catch((err) => {});
   };
 
   return (
-    <div>
+    <div className="mx-auto max-w-md mt-8 p-6 bg-white rounded-lg shadow-xl">
+      <h1 className="text-xl font-bold mb-4">Add Application</h1>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="StudentID">StudentID</label>
-        <input
-          type="number"
-          name="StudentID"
-          id="StudentID"
-          value={StudentID}
-          onChange={handleStudentIDChange}
-          className="text-black bg-blue-200 rounded-md p-2"
-        />
-        <label htmlFor="JobID">JobID</label>
-        <input
-          type="number"
-          name="JobID"
-          id="JobID"
-          value={JobID}
-          onChange={handleJobIDChange}
-          className="text-black bg-blue-200 rounded-md p-2"
-        />
-
-        <button type="submit" className="btn">
+        <div className="mb-4">
+          <label htmlFor="students" className="font-bold block mb-2">
+            Select a student:
+          </label>
+          <select
+            id="students"
+            name="students"
+            value={selectedStudent}
+            onChange={(e) => setSelectedStudent(e.target.value)}
+            className="block w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            {listOfStudents.map((student, index) => (
+              <option key={index}>{student}</option>
+            ))}
+          </select>
+        </div>
+        <div className="mb-4">
+          <label htmlFor="jobs" className="font-bold block mb-2">
+            Select a job:
+          </label>
+          <select
+            id="jobs"
+            name="jobs"
+            value={selectedJob}
+            onChange={(e) => setSelectedJob(e.target.value)}
+            className="block w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+          >
+            {listOfJobs.map((job, index) => (
+              <option key={index}>{job}</option>
+            ))}
+          </select>
+        </div>
+        <button
+          type="submit"
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+        >
           Submit
         </button>
       </form>
