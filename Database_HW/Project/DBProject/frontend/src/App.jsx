@@ -4,7 +4,7 @@ import Header from "./pages/Header";
 import AddStudent from "./pages/AddStudent";
 import AddJob from "./pages/AddJob";
 import AddApplication from "./pages/AddApplication";
-import GetStudents from "./pages/getStudents";
+import GetStudents from "./pages/GetStudents";
 import GetJobs from "./pages/getJobs";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
