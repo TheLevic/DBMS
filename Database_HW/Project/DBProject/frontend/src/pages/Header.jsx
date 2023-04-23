@@ -23,6 +23,10 @@ function Header() {
     nav("/getjobs");
   };
 
+  let handleClickGetApplications = () => {
+    nav("/getapplications");
+  };
+
   return (
     <div className="flex align-middle items-center justify-evenly">
       <button onClick={handleClickAddStudent} className="btn">
@@ -40,6 +44,10 @@ function Header() {
       <button className="btn" onClick={handleClickGetJobs}>
         Get Jobs
       </button>
+      <button className="btn" onClick={handleClickGetApplications}>
+        Get Applications
+      </button>
+
     </div>
   );
 }
