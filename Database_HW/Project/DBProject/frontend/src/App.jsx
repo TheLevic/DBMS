@@ -5,6 +5,7 @@ import AddStudent from "./pages/AddStudent";
 import AddJob from "./pages/AddJob";
 import AddApplication from "./pages/AddApplication";
 import GetStudents from "./pages/getStudents";
+import GetJobs from "./pages/getJobs";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
@@ -19,6 +20,7 @@ function App() {
           <Route path="/addjob" element={<AddJob />} />
           <Route path="/addapplication" element={<AddApplication />} />
           <Route path="/getstudents" element={<GetStudents />} />
+          <Route path="/getjobs" element={<GetJobs />} />
         </Routes>
       </Router>
     </div>

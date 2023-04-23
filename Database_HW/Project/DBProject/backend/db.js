@@ -32,6 +32,17 @@ let getAllMajors = async () => {
   }
 };
 
+let getAllDesiredMajors = async () => {
+  try {
+    query = "SELECT DISTINCT DESIREDMAJOR FROM JOBS";
+    let [rows] = await pool.query(query);
+    const majors = rows.map((row) => row.DESIREDMAJOR);
+    return majors;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 let getStudentsByMajor = async (major) => {
   try {
     query = "SELECT STUDENTNAME FROM STUDENTS WHERE MAJOR = ?";
@@ -44,4 +55,16 @@ let getStudentsByMajor = async (major) => {
   }
 };
 
-module.exports = { insertStudentToDB, getAllMajors, getStudentsByMajor };
+let getJobsByMajor = async (major) => {
+  try {
+    query = "SELECT JOBTITLE FROM JOBS WHERE DESIREDMAJOR = ?";
+    let [jobs] = await pool.query(query, [major]);
+    //Map students to only return the names
+    jobs = jobs.map((job) => job.JOBTITLE);
+    return jobs;
+  } catch (error) {
+    return false;
+  }
+};
+
+module.exports = { insertStudentToDB, getAllMajors, getStudentsByMajor, getJobsByMajor, getAllDesiredMajors };
