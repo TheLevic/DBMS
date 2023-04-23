@@ -59,6 +59,17 @@ let getListOfStudents = async () => {
   }
 };
 
+let getListOfJobs = async () => {
+  try {
+    query = "SELECT * FROM JOBS";
+    let [rows] = await pool.query(query);
+    console.log(rows);
+    return rows;
+  } catch (error) {
+    console.log("error");
+  }
+};
+
 let getAllJobs = async () => {
   try {
     query = "SELECT JOBTITLE FROM JOBS";
@@ -114,6 +125,16 @@ let getJobsByMajor = async (major) => {
   }
 };
 
+let addApplicatioin = async (studentid, jobid) => {
+  try {
+    query = "INSERT INTO APPLICATIONS (STUDENTID, JOBID) VALUES (?,?)";
+    await pool.query(query, [studentid, jobid]);
+    return true;
+  } catch (error) {
+    return false;
+  }
+};
+
 module.exports = {
   insertStudentToDB,
   insertJobToDB,
@@ -124,4 +145,5 @@ module.exports = {
   getAllStudents,
   getAllJobs,
   getListOfStudents,
+  getListOfJobs,
 };

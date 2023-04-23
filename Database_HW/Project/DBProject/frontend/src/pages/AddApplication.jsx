@@ -10,9 +10,7 @@ function AddApplication() {
 
   //useEffect to get all students and all jobs from the backend
   useEffect(() => {
-    let formData = new FormData();
-    formData.append("Major", "All");
-    axios.get("/api/getlistofstudentinfo", formData).then((res) => {
+    axios.get("/api/getlistofstudentinfo").then((res) => {
       if (res.status === 200 && res.data) {
         setListOfStudents(res.data);
         return;
@@ -25,14 +23,12 @@ function AddApplication() {
 
   useEffect(() => {
     if (listOfStudents.length > 0) {
-      setSelectedStudent(listOfStudents[0]);
+      setSelectedStudent(listOfStudents[0].STUDENTNAME);
     }
   }, [listOfStudents]);
 
   useEffect(() => {
-    const formData = new FormData();
-    formData.append("Major", "All");
-    axios.post("/api/getjobsbymajor", formData).then((res) => {
+    axios.get("/api/getlistofjobinfo").then((res) => {
       if (res.status === 200 && res.data) {
         setListOfJobs(res.data);
         return;
@@ -45,7 +41,7 @@ function AddApplication() {
 
   useEffect(() => {
     if (listOfJobs.length > 0) {
-      setSelectedJob(listOfJobs[0]);
+      setSelectedJob(listOfJobs[0].JOBTITLE);
     }
   }, [listOfJobs]);
 
@@ -55,12 +51,12 @@ function AddApplication() {
     let studentId = "";
     let jobId = "";
     listOfStudents.forEach((student) => {
-      if (student.Name === selectedStudent) {
+      if (student.STUDENTNAME === selectedStudent) {
         studentId = student._id;
       }
     });
     listOfJobs.forEach((job) => {
-      if (job.Title === selectedJob) {
+      if (job.JOBTITLE === selectedJob) {
         jobId = job._id;
       }
     });
@@ -92,7 +88,7 @@ function AddApplication() {
             className="block w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             {listOfStudents.map((student, index) => (
-              <option key={index}>{student}</option>
+              <option key={index}>{student.STUDENTNAME}</option>
             ))}
           </select>
         </div>
@@ -108,7 +104,7 @@ function AddApplication() {
             className="block w-full p-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
           >
             {listOfJobs.map((job, index) => (
-              <option key={index}>{job}</option>
+              <option key={index}>{job.JOBTITLE}</option>
             ))}
           </select>
         </div>
