@@ -21,6 +21,18 @@ let insertStudentToDB = async (student) => {
   }
 };
 
+let getAllStudents = async () => {
+  try {
+    query = "SELECT STUDENTNAME FROM STUDENTS";
+    [rows] = await pool.query(query);
+    console.log(rows);
+    const students = rows.map((row) => row.STUDENTNAME);
+    return students;
+  } catch (error) {
+    console.log("error");
+  }
+};
+
 let getAllMajors = async () => {
   try {
     query = "SELECT DISTINCT MAJOR FROM STUDENTS";
@@ -69,4 +81,5 @@ module.exports = {
   getStudentsByMajor,
   getJobsByMajor,
   getAllDesiredMajors,
+  getAllStudents,
 };
