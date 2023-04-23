@@ -38,41 +38,48 @@ function GetJobs() {
         }
       });
   };
-
   return (
-    <div>
-      <h1 className="font-bold font-sans text-3xl">
-        List all Jobs for a specific major
+    <div className="container mx-auto my-8">
+      <h1 className="font-bold text-4xl mb-4">
+        List all jobs for a specific major
       </h1>
-      <form className="border-2 border-black" onSubmit={handleSubmit}>
-        <label htmlFor="major">Select desired major</label>
+      <form
+        className="border-2 border-gray-300 p-4 rounded-md"
+        onSubmit={handleSubmit}
+      >
+        <label htmlFor="major" className="block font-medium mb-2">
+          Select desired major
+        </label>
         <select
-          className="p-4 m-2"
+          className="p-2 rounded-md bg-gray-200 mb-4"
           value={selectedMajor}
           onChange={(event) => {
             setSelectedMajor(event.target.value);
           }}
         >
           {listOfMajors.map((major, index) => (
-            <option
-              key={index}
-              className="p-2 text-black bg-blue-200"
-              value={major}
-            >
+            <option key={index} value={major}>
               {major}
             </option>
           ))}
         </select>
-        <button className="btn" type="submit">
+        <button
+          className="bg-blue-600 text-white py-2 px-4 rounded-md"
+          type="submit"
+        >
           Submit
         </button>
       </form>
       {listOfJobs.length > 0 && (
-        <div>
-          <h2>Jobs with {selectedMajor} major:</h2>
-          <ul>
+        <div className="mt-6">
+          <h2 className="font-bold text-2xl mb-2">
+            Jobs with {selectedMajor} major:
+          </h2>
+          <ul className="list-disc list-inside">
             {listOfJobs.map((job, index) => (
-              <li key={index}>{job}</li>
+              <li key={index} className="text-lg">
+                {job}
+              </li>
             ))}
           </ul>
         </div>

@@ -52,7 +52,7 @@ function AddJob() {
       .then((res) => {
         if (res.status === 200) {
           toast.success("Job Added Successfully");
-          //nav("/");
+          nav("/");
         } else if (res.status === 400) {
           toast.error("Error. Please try again");
         } else if (res.status === 500) {
@@ -71,49 +71,71 @@ function AddJob() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="Name">Name</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={Name}
-          onChange={handleNameChange}
-          className="text-black bg-blue-200 rounded-md p-2"
-        />
+    <div className="flex flex-col space-y-4">
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-6 rounded-lg shadow-md"
+      >
+        <div className="mb-4">
+          <label htmlFor="Name" className="block font-bold mb-2">
+            Name:
+          </label>
+          <input
+            type="text"
+            name="name"
+            id="name"
+            value={Name}
+            onChange={handleNameChange}
+            className="w-full py-2 px-4 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:bg-white focus:border-blue-500"
+          />
+        </div>
 
-        <label htmlFor="Title">Job Title</label>
-        <input
-          className="bg-blue-200 rounded-md p-2"
-          type="text"
-          name="Title"
-          id="Title"
-          value={Title}
-          onChange={handleTitleChange}
-        />
+        <div className="mb-4">
+          <label htmlFor="Title" className="block font-bold mb-2">
+            Job Title:
+          </label>
+          <input
+            type="text"
+            name="Title"
+            id="Title"
+            value={Title}
+            onChange={handleTitleChange}
+            className="w-full py-2 px-4 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:bg-white focus:border-blue-500"
+          />
+        </div>
 
-        <label htmlFor="Salary">Salary</label>
-        <input
-          type="number"
-          name="Salary"
-          id="Salary"
-          value={Salary}
-          onChange={handleSalaryChange}
-          className="text-black bg-blue-200 rounded-md p-2"
-        />
+        <div className="mb-4">
+          <label htmlFor="Salary" className="block font-bold mb-2">
+            Salary:
+          </label>
+          <input
+            type="number"
+            name="Salary"
+            id="Salary"
+            value={Salary}
+            onChange={handleSalaryChange}
+            className="w-full py-2 px-4 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:bg-white focus:border-blue-500"
+          />
+        </div>
 
-        <label htmlFor="DesiredMajor">Desired Major</label>
-        <input
-          className="bg-blue-200 rounded-md p-2"
-          type="text"
-          name="DesiredMajor"
-          id="DesiredMajor"
-          value={DesiredMajor}
-          onChange={handleDesiredMajorChange}
-        />
+        <div className="mb-4">
+          <label htmlFor="DesiredMajor" className="block font-bold mb-2">
+            Desired Major:
+          </label>
+          <input
+            type="text"
+            name="DesiredMajor"
+            id="DesiredMajor"
+            value={DesiredMajor}
+            onChange={handleDesiredMajorChange}
+            className="w-full py-2 px-4 rounded-lg bg-gray-100 border border-gray-300 focus:outline-none focus:bg-white focus:border-blue-500"
+          />
+        </div>
 
-        <button type="submit" className="btn">
+        <button
+          type="submit"
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded-lg"
+        >
           Submit
         </button>
       </form>

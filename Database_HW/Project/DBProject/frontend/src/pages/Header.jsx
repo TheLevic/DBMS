@@ -24,22 +24,40 @@ function Header() {
   };
 
   return (
-    <div className="flex align-middle items-center justify-evenly">
-      <button onClick={handleClickAddStudent} className="btn">
-        Add Student
-      </button>
-      <button onClick={handleClickAddJob} className="btn">
-        Add Job
-      </button>
-      <button onClick={handleClickAddApplication} className="btn">
-        Add Application
-      </button>
-      <button className="btn" onClick={handleClickGetStudents}>
-        Get Students
-      </button>
-      <button className="btn" onClick={handleClickGetJobs}>
-        Get Jobs
-      </button>
+    <div className="flex flex-col items-center justify-center h-screen">
+      <h1 className="font-bold text-4xl mb-8">Database Application</h1>
+      <div className="grid grid-cols-2 gap-8">
+        <button
+          onClick={handleClickAddStudent}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded"
+        >
+          Add Student
+        </button>
+        <button
+          onClick={handleClickAddJob}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded"
+        >
+          Add Job
+        </button>
+        <button
+          onClick={handleClickAddApplication}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded"
+        >
+          Add Application
+        </button>
+        <button
+          onClick={handleClickGetStudents}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded"
+        >
+          Get Students
+        </button>
+        <button
+          onClick={handleClickGetJobs}
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-4 px-8 rounded"
+        >
+          Get Jobs
+        </button>
+      </div>
     </div>
   );
 }
