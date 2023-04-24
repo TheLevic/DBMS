@@ -6,10 +6,11 @@ function GetApplications() {
   const [listOfMajors, setListOfMajors] = useState([]);
   const [listOfStudents, setListOfStudents] = useState([]);
   const [listOfJobs, setListOfJobs] = useState([]);
-  const [selectedMajor, setSelectedMajor] = useState(listOfMajors[0]);
-  const [selectedStudent, setSelectedStudent] = useState(listOfMajors[0]);
-  const [selectedJob, setSelectedJob] = useState(listOfMajors[0]);
+  const [selectedMajor, setSelectedMajor] = useState(null);
+  const [selectedStudent, setSelectedStudent] = useState(null);
+  const [selectedJob, setSelectedJob] = useState(null);
   const [listOfApplications, setListOfApplications] = useState([]);
+  const [fullApplicationList, setFullApplicationList] = useState([]);
 
   useEffect(() => {
     axios.get("/api/getdesiredmajors").then((response) => {
@@ -46,36 +47,36 @@ function GetApplications() {
 
   let handleSubmit = (event) => {
     event.preventDefault();
+    // We want to append all selected values to the form data
     let formData = new FormData();
-    formData.append("Major", selectedMajor);
-    axios
-      .post("/api/getstudentsbymajor", formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((response) => {
-        if (response.status === 200 && response.data) {
-          setListOfApplications(response.data);
-        } else {
-          toast.error("Could not get students");
-        }
-      });
+    if (selectedMajor) {
+      formData.append("major", selectedMajor);
+    }
+    if (selectedStudent) {
+      formData.append("student", selectedStudent);
+    }
+    if (selectedJob) {
+      formData.append("job", selectedJob);
+    }
+
+    axios.post("/api/getcertainapplcations", formData).then((response) => {
+      if (response.status === 200 && response.data) {
+        setListOfApplications(response.data);
+      } else {
+        toast.error("Could not get application info");
+      }
+    });
   };
 
   let handleViewAll = (event) => {
     event.preventDefault();
-    let formData = new FormData();
-    formData.append("Major", selectedMajor);
-    axios
-      .get("/api/getapplicationlist")
-      .then((response) => {
-        if (response.status === 200 && response.data) {
-          setListOfApplications(response.data);
-        } else {
-          toast.error("Could not get students");
-        }
-      });
+    axios.get("/api/getapplicationlist").then((response) => {
+      if (response.status === 200 && response.data) {
+        setListOfApplications(response.data);
+      } else {
+        toast.error("Could not get students");
+      }
+    });
   };
 
   return (
@@ -83,8 +84,7 @@ function GetApplications() {
       <h1 className="font-bold font-sans text-3xl mb-4">Get Applications</h1>
       <form
         className="border-2 border-gray-300 p-4 rounded-md"
-        //onSubmit={handleSubmit}
-        onSubmit={handleViewAll}
+        onSubmit={handleSubmit}
       >
         <div className="mb-4">
           <label htmlFor="major" className="block font-medium mb-2">
@@ -150,6 +150,7 @@ function GetApplications() {
           <button
             className="bg-blue-600 text-white py-2 px-4 rounded-md"
             type="submit"
+            onClick={handleViewAll}
           >
             View All
           </button>
@@ -157,16 +158,35 @@ function GetApplications() {
       </form>
       {listOfApplications.length > 0 && (
         <div className="mt-6">
-          <h2 className="font-bold text-2xl mb-2">
-            Students with {selectedMajor} major:
-          </h2>
-          <ul className="list-disc list-inside">
-            {listOfApplications.map((application, index) => (
-              <li key={index} className="text-lg">
-                {application}
-              </li>
-            ))}
-          </ul>
+          <h2 className="font-bold text-2xl mb-2">List of Applications:</h2>
+          <table className="border-collapse border border-gray-600">
+            <thead>
+              <tr className="bg-gray-300">
+                <th className="border border-gray-600 p-2">Student</th>
+                <th className="border border-gray-600 p-2">Major</th>
+                <th className="border border-gray-600 p-2">Company</th>
+                <th className="border border-gray-600 p-2">Salary</th>
+              </tr>
+            </thead>
+            <tbody>
+              {listOfApplications.map((application, index) => (
+                <tr key={index}>
+                  <td className="border border-gray-600 p-2">
+                    {application.STUDENTNAME}
+                  </td>
+                  <td className="border border-gray-600 p-2">
+                    {application.MAJOR}
+                  </td>
+                  <td className="border border-gray-600 p-2">
+                    {application.COMPANYNAME}
+                  </td>
+                  <td className="border border-gray-600 p-2">
+                    {application.SALARY}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       )}
     </div>
