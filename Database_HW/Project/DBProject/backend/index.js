@@ -14,9 +14,11 @@ const getJobByMajorRouter = require("./routers/getJobByMajorRouter");
 const getJobListRouter = require("./routers/getJobList");
 const getListOfStudentInfo = require("./routers/getListOfStudentInfoRouter");
 const getListOfJobInfoRouter = require("./routers/getListOfJobInfoRouter");
+const addApplicationRouter = require("./routers/addApplicationRouter");
 
 app.use("/api/addstudent", addStudentRouter);
 app.use("/api/addjob", addJobRouter);
+app.use("/api/addapplication", addApplicationRouter);
 app.use("/api/getmajors", getMajorsRouter);
 app.use("/api/getdesiredmajors", getDesiredMajorsRouter);
 app.use("/api/getstudentsbymajor", getStudentByMajorRouter);

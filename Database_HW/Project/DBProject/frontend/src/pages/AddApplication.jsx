@@ -52,24 +52,30 @@ function AddApplication() {
     let jobId = "";
     listOfStudents.forEach((student) => {
       if (student.STUDENTNAME === selectedStudent) {
-        studentId = student._id;
+        studentId = student.STUDENTID;
       }
     });
     listOfJobs.forEach((job) => {
       if (job.JOBTITLE === selectedJob) {
-        jobId = job._id;
+        jobId = job.JOBID;
       }
     });
     let formData = new FormData();
     formData.append("StudentId", studentId);
     formData.append("JobId", jobId);
-    axios.post("/api/addapplication", formData).then((res) => {
-      if (res.status === 200 && res.data) {
-        toast.success("Application added");
-        return;
-      }
-      toast.error("Error adding application");
-    });
+    axios
+      .post("/api/addapplication", formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then((res) => {
+        if (res.status === 200 && res.data) {
+          toast.success("Application added");
+          return;
+        }
+        toast.error("Error adding application");
+      });
   };
 
   return (

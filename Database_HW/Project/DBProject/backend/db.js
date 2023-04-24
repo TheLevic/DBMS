@@ -63,7 +63,6 @@ let getListOfJobs = async () => {
   try {
     query = "SELECT * FROM JOBS";
     let [rows] = await pool.query(query);
-    console.log(rows);
     return rows;
   } catch (error) {
     console.log("error");
@@ -125,7 +124,7 @@ let getJobsByMajor = async (major) => {
   }
 };
 
-let addApplicatioin = async (studentid, jobid) => {
+let addApplication = async (studentid, jobid) => {
   try {
     query = "INSERT INTO APPLICATIONS (STUDENTID, JOBID) VALUES (?,?)";
     await pool.query(query, [studentid, jobid]);
@@ -146,4 +145,5 @@ module.exports = {
   getAllJobs,
   getListOfStudents,
   getListOfJobs,
+  addApplication,
 };

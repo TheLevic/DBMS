@@ -8,7 +8,6 @@ router.get("/", async (req, res) => {
     if (students.length > 0) {
       return res.status(200).send(students);
     } else {
-      console.log("HEre");
       return res.status(404).send("No students found");
     }
   } catch (err) {
