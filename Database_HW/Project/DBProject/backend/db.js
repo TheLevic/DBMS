@@ -82,11 +82,12 @@ let getAllJobs = async () => {
 
 let getAllApplications = async () => {
   try {
-    query = "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID";
+    query =
+      "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID";
     [rows] = await pool.query(query);
     applications = rows.map((row) => row.COMPANYNAME);
     console.log("hey");
-    return applications;  
+    return applications;
   } catch (error) {
     console.log(error);
   }
@@ -136,7 +137,6 @@ let getJobsByMajor = async (major) => {
   }
 };
 
-
 // let getApplicationssByMajor = async (major) => {
 //   try {
 //     query = "SELECT JOBTITLE FROM JOBS WHERE DESIREDMAJOR = ?";
@@ -159,7 +159,6 @@ let addApplication = async (studentid, jobid) => {
   }
 };
 
-
 module.exports = {
   insertStudentToDB,
   insertJobToDB,
@@ -169,10 +168,8 @@ module.exports = {
   getAllDesiredMajors,
   getAllStudents,
   getAllJobs,
-
-  getAllApplications
+  getAllApplications,
   getListOfStudents,
   getListOfJobs,
   addApplication,
-
 };
