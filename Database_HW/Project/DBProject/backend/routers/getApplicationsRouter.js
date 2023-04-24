@@ -10,7 +10,7 @@ router.post("/", upload.none(), async (req, res) => {
     const job = req.body.Job;
     const student = req.body.Student;
     if (req.body.Major != "") {
-      const applications = await getApplicationsByMajor();
+      const applications = await getApplicationsByMajor(major);
       return res.status(200).send(applications);
     }
     //const students = await getStudentsByMajor(major);
