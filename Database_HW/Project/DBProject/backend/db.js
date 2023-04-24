@@ -85,9 +85,7 @@ let getAllApplications = async () => {
     query =
       "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID";
     [rows] = await pool.query(query);
-    applications = rows.map((row) => row.COMPANYNAME);
-    console.log("hey");
-    return applications;
+    return rows;
   } catch (error) {
     console.log(error);
   }
