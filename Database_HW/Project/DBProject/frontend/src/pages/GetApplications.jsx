@@ -63,12 +63,28 @@ function GetApplications() {
       });
   };
 
+  let handleViewAll = (event) => {
+    event.preventDefault();
+    let formData = new FormData();
+    formData.append("Major", selectedMajor);
+    axios
+      .get("/api/getapplicationlist")
+      .then((response) => {
+        if (response.status === 200 && response.data) {
+          setListOfApplications(response.data);
+        } else {
+          toast.error("Could not get students");
+        }
+      });
+  };
+
   return (
     <div className="container mx-auto my-8">
       <h1 className="font-bold font-sans text-3xl mb-4">Get Applications</h1>
       <form
         className="border-2 border-gray-300 p-4 rounded-md"
-        onSubmit={handleSubmit}
+        //onSubmit={handleSubmit}
+        onSubmit={handleViewAll}
       >
         <div className="mb-4">
           <label htmlFor="major" className="block font-medium mb-2">
@@ -133,7 +149,7 @@ function GetApplications() {
           </button>
           <button
             className="bg-blue-600 text-white py-2 px-4 rounded-md"
-            type="viewAll"
+            type="submit"
           >
             View All
           </button>
