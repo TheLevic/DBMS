@@ -59,7 +59,7 @@ function GetApplications() {
       formData.append("job", selectedJob);
     }
 
-    axios.post("/api/getcertainapplcations", formData).then((response) => {
+    axios.post("/api/getapplications", formData).then((response) => {
       if (response.status === 200 && response.data) {
         setListOfApplications(response.data);
       } else {

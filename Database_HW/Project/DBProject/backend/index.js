@@ -16,6 +16,7 @@ const getApplicationListRouter = require("./routers/getApplicationList");
 const getListOfStudentInfo = require("./routers/getListOfStudentInfoRouter");
 const getListOfJobInfoRouter = require("./routers/getListOfJobInfoRouter");
 const addApplicationRouter = require("./routers/addApplicationRouter");
+const getApplicationsRouter = require("./routers/getApplicationsRouter");
 
 app.use("/api/addstudent", addStudentRouter);
 app.use("/api/addjob", addJobRouter);
@@ -29,6 +30,7 @@ app.use("/api/getjoblist", getJobListRouter);
 app.use("/api/getapplicationlist", getApplicationListRouter);
 app.use("/api/getlistofstudentinfo", getListOfStudentInfo);
 app.use("/api/getlistofjobinfo", getListOfJobInfoRouter);
+app.use("/api/getapplications", getApplicationsRouter);
 
 
 app.listen(process.env.PORT, () => {
