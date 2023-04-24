@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function AddApplication() {
   const [listOfStudents, setListOfStudents] = useState([]);
   const [selectedStudent, setSelectedStudent] = useState("");
   const [listOfJobs, setListOfJobs] = useState([]);
   const [selectedJob, setSelectedJob] = useState("");
+  const nav = useNavigate();
 
   //useEffect to get all students and all jobs from the backend
   useEffect(() => {
@@ -71,6 +73,7 @@ function AddApplication() {
       })
       .then((res) => {
         if (res.status === 200 && res.data) {
+          nav("/");
           toast.success("Application added");
           return;
         }
