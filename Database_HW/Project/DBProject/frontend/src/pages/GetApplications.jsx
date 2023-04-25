@@ -81,7 +81,7 @@ function GetApplications() {
 
   return (
     <div className="container mx-auto my-8">
-      <h1 className="font-bold font-sans text-3xl mb-4">Get Applications (Please only have one field not be empty at a time)</h1>
+      <h1 className="font-bold font-sans text-3xl mb-4">Get Applications </h1>
       <form
         className="border-2 border-gray-300 p-4 rounded-md"
         onSubmit={handleSubmit}
