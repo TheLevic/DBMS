@@ -178,6 +178,50 @@ let getApplicationsByJob = async (job) => {
   }
 };
 
+let getApplicationsByMulti1 = async (major, job) => {
+  try {
+    query =
+      "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID WHERE JOBS.DESIREDMAJOR=? AND JOBS.JOBTITLE=?";
+    [rows] = await pool.query(query, [major, job]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+let getApplicationsByMulti2 = async (major, student) => {
+  try {
+    query =
+      "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID WHERE JOBS.DESIREDMAJOR=? AND STUDENTS.STUDENTNAME=?";
+    [rows] = await pool.query(query, [major, student]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+let getApplicationsByMulti3 = async (job, student) => {
+  try {
+    query =
+      "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID WHERE JOBS.JOBTITLE=? AND STUDENTS.STUDENTNAME=?";
+    [rows] = await pool.query(query, [job, student]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+let getApplicationsByMulti4 = async (major, job, student) => {
+  try {
+    query =
+      "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID WHERE JOBS.DESIREDMAJOR=? AND JOBS.JOBTITLE=? AND STUDENTS.STUDENTNAME=?";
+    [rows] = await pool.query(query, [major, job, student]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 module.exports = {
   insertStudentToDB,
   insertJobToDB,
@@ -193,5 +237,9 @@ module.exports = {
   addApplication,
   getApplicationsByMajor,
   getApplicationsByStudent,
-  getApplicationsByJob
+  getApplicationsByJob,
+  getApplicationsByMulti1,
+  getApplicationsByMulti2,
+  getApplicationsByMulti3,
+  getApplicationsByMulti4
 };
