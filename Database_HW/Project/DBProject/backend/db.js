@@ -148,8 +148,30 @@ let addApplication = async (studentid, jobid) => {
 let getApplicationsByMajor = async (major) => {
   try {
     query =
-      "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID WHERE STUDENTS.MAJOR=?";
+      "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID WHERE JOBS.DESIREDMAJOR=?";
     [rows] = await pool.query(query, [major]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+let getApplicationsByStudent = async (student) => {
+  try {
+    query =
+      "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID WHERE STUDENTS.STUDENTNAME=?";
+    [rows] = await pool.query(query, [student]);
+    return rows;
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+let getApplicationsByJob = async (job) => {
+  try {
+    query =
+      "SELECT STUDENTS.STUDENTNAME, STUDENTS.MAJOR, JOBS.SALARY, JOBS.COMPANYNAME FROM APPLICATIONS INNER JOIN STUDENTS ON APPLICATIONS.STUDENTID = STUDENTS.STUDENTID INNER JOIN JOBS ON APPLICATIONS.JOBID = JOBS.JOBID WHERE JOBS.JOBTITLE=?";
+    [rows] = await pool.query(query, [job]);
     return rows;
   } catch (error) {
     console.log(error);
@@ -169,5 +191,7 @@ module.exports = {
   getListOfStudents,
   getListOfJobs,
   addApplication,
-  getApplicationsByMajor
+  getApplicationsByMajor,
+  getApplicationsByStudent,
+  getApplicationsByJob
 };
