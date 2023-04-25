@@ -15,8 +15,8 @@ function GetApplications() {
   useEffect(() => {
     axios.get("/api/getdesiredmajors").then((response) => {
       if (response.status === 200 && response.data) {
-        setListOfMajors(["", ...response.data]);
-        setSelectedMajor("");
+        setListOfMajors(["empty", ...response.data]);
+        setSelectedMajor("empty");
       } else {
         toast.error("Could not get majors");
       }
@@ -26,8 +26,8 @@ function GetApplications() {
   useEffect(() => {
     axios.get("/api/getstudentlist").then((response) => {
       if (response.status === 200 && response.data) {
-        setListOfStudents(["", ...response.data]);
-        setSelectedStudent("");
+        setListOfStudents(["empty", ...response.data]);
+        setSelectedStudent("empty");
       } else {
         toast.error("Could not get majors");
       }
@@ -37,8 +37,8 @@ function GetApplications() {
   useEffect(() => {
     axios.get("/api/getjoblist").then((response) => {
       if (response.status === 200 && response.data) {
-        setListOfJobs(["", ...response.data]);
-        setSelectedJob("");
+        setListOfJobs(["empty", ...response.data]);
+        setSelectedJob("empty");
       } else {
         toast.error("Could not get majors");
       }
@@ -59,7 +59,7 @@ function GetApplications() {
       formData.append("job", selectedJob);
     }
 
-    axios.post("/api/getcertainapplcations", formData).then((response) => {
+    axios.post("/api/getapplications", formData).then((response) => {
       if (response.status === 200 && response.data) {
         setListOfApplications(response.data);
       } else {
@@ -81,14 +81,14 @@ function GetApplications() {
 
   return (
     <div className="container mx-auto my-8">
-      <h1 className="font-bold font-sans text-3xl mb-4">Get Applications</h1>
+      <h1 className="font-bold font-sans text-3xl mb-4">Get Applications (Please only have one field not be empty at a time)</h1>
       <form
         className="border-2 border-gray-300 p-4 rounded-md"
         onSubmit={handleSubmit}
       >
         <div className="mb-4">
           <label htmlFor="major" className="block font-medium mb-2">
-            Select major
+            Select desired major of company
           </label>
           <select
             className="p-2 rounded-md bg-gray-200"
@@ -163,7 +163,7 @@ function GetApplications() {
             <thead>
               <tr className="bg-gray-300">
                 <th className="border border-gray-600 p-2">Student</th>
-                <th className="border border-gray-600 p-2">Major</th>
+                <th className="border border-gray-600 p-2">Student's Major</th>
                 <th className="border border-gray-600 p-2">Company</th>
                 <th className="border border-gray-600 p-2">Salary</th>
               </tr>
