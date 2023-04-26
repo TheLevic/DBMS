@@ -1,11 +1,17 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 
 function GetStudents() {
   const [listOfMajors, setListOfMajors] = useState([]);
   const [listOfStudents, setListOfStudents] = useState([]);
   const [selectedMajor, setSelectedMajor] = useState(listOfMajors[0]);
+  const nav = useNavigate();
+
+  let goHome = () => {
+    nav("/");
+  };
 
   useEffect(() => {
     axios.get("/api/getmajors").then((response) => {
@@ -67,6 +73,12 @@ function GetStudents() {
           className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
         >
           Submit
+        </button>
+        <button
+          className="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded"
+          onClick={goHome}
+        >
+          Home
         </button>
       </form>
       {listOfStudents.length > 0 && (

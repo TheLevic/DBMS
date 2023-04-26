@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function GetApplications() {
   const [listOfMajors, setListOfMajors] = useState([]);
@@ -10,7 +11,8 @@ function GetApplications() {
   const [selectedStudent, setSelectedStudent] = useState(null);
   const [selectedJob, setSelectedJob] = useState(null);
   const [listOfApplications, setListOfApplications] = useState([]);
-  const [fullApplicationList, setFullApplicationList] = useState([]);
+
+  const nav = useNavigate();
 
   useEffect(() => {
     axios.get("/api/getdesiredmajors").then((response) => {
@@ -77,6 +79,10 @@ function GetApplications() {
         toast.error("Could not get students");
       }
     });
+  };
+
+  let goHome = () => {
+    nav("/");
   };
 
   return (
@@ -153,6 +159,12 @@ function GetApplications() {
             onClick={handleViewAll}
           >
             View All
+          </button>
+          <button
+            className="bg-blue-600 text-white py-2 px-4 rounded-md"
+            onClick={goHome}
+          >
+            Home
           </button>
         </div>
       </form>

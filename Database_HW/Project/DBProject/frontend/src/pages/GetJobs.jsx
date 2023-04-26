@@ -1,11 +1,17 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function GetJobs() {
   const [listOfMajors, setListOfMajors] = useState([]);
   const [listOfJobs, setListOfJobs] = useState([]);
   const [selectedMajor, setSelectedMajor] = useState(listOfMajors[0]);
+  const nav = useNavigate();
+
+  let goHome = () => {
+    nav("/");
+  };
 
   useEffect(() => {
     axios.get("/api/getdesiredmajors").then((response) => {
@@ -68,6 +74,12 @@ function GetJobs() {
           type="submit"
         >
           Submit
+        </button>
+        <button
+          className="bg-blue-600 text-white py-2 px-4 rounded-md"
+          onClick={goHome}
+        >
+          Home
         </button>
       </form>
       {listOfJobs.length > 0 && (
